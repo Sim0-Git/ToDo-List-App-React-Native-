@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Modal, StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -15,9 +15,22 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Group>
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              title: "My List",
+              headerStyle: { backgroundColor: "orange" },
+              headerTintColor: "dodgerblue",
+              headerTitleAlign: "center",
+            }} //headerShown: false //Hide the header
+          />
         </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: "modal" }}>
+        <Stack.Group
+          screenOptions={{
+            presentation: "modal",
+          }}
+        >
           <Stack.Screen name="Add Item" component={AddScreen} />
           <Stack.Screen name="Update Item" component={UpdateScreen} />
         </Stack.Group>
