@@ -8,7 +8,10 @@ import {
 export function ItemComponent(props, route) {
   return (
     <TouchableWithoutFeedback style={styles.container}>
-      <Text style={styles.text}>{props.itemName}</Text>
+      <Text style={styles.text}>
+        {props.itemName}
+        {props.text}
+      </Text>
     </TouchableWithoutFeedback>
   );
 }

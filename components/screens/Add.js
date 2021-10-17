@@ -26,11 +26,11 @@ function AddScreen({ navigation }) {
       setFeedBack("This field cannot be empty");
       Alert.alert("Alert", "This field cannot be empty", [{ text: "Close" }]);
     }
-    // navigation.navigate({
-    //   name: "Home",
-    //   params: { name: input },
-    //   merge: true,
-    // });
+    navigation.navigate({
+      name: "Home",
+      params: { item: input },
+      merge: true,
+    });
   };
   //Just checking the array content
   for (let i = 0; i < itemsArray.length; i++) {

@@ -16,7 +16,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Group>
           <Stack.Screen
-            initialParams={{ name: "cazzo" }}
+            initialParams={{ input: null }}
             name="Home"
             component={HomeScreen}
             options={{
