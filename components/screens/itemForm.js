@@ -16,7 +16,7 @@ export default function itemForm({ addItem, navigation }) {
   return (
     <View style={styles.container}>
       <Formik
-        initialValues={{ name: "" }}
+        initialValues={{ name: "", key: 0 }}
         onSubmit={(value, actions) => {
           actions.resetForm(); //Reset the form
           addItem(value);

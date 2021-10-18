@@ -34,19 +34,21 @@ function UpdateScreen({ route, navigation }) {
           <TextInput
             style={styles.input}
             placeholder="New item"
-            //onChangeText={(input) => setInput(input)}
+            onChangeText={(input) => setInput(input)}
             value={input}
           >
-            {name}
+            {/* {name} */}
             {/*Get name of the item from the home page  */}
           </TextInput>
           <TouchableOpacity>
             <FontAwesome5 name="eraser" size={24} color="#F59133" />
           </TouchableOpacity>
         </View>
+
         <TouchableHighlight
           style={styles.button}
-          onPress={handelPress}
+          onPress={() => navigation.navigate("Home", { key, name })}
+          {...console.log(input)}
           underlayColor="lightblue"
         >
           <Text style={styles.text}>Update</Text>

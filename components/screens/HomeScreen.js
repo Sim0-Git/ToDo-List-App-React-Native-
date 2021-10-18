@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   SafeAreaView,
   Image,
   TouchableHighlight,
@@ -14,18 +13,27 @@ import {
 } from "react-native";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import ItemForm from "./itemForm";
+import Check from "./CheckBox";
 
-export function HomeScreen2({ navigation }) {
+export function HomeScreen2({ route, navigation }) {
+  const { key } = route.params;
+  const { name } = route.params;
   const [modalOpen, setAddModalOpen] = useState(false);
   const [itemArray, setItemArray] = useState([]);
+  console.log("Item name: " + name);
+  console.log("Item key: " + key);
 
   const addItem = (item) => {
+    //let keyInt = 0;
+    //item.key = keyInt.toString();
+    //keyInt += 1;
     item.key = Math.random().toString();
     setItemArray((currentItem) => {
       return [item, ...currentItem];
     });
     setAddModalOpen(false);
   };
+
   const deleteItem = (key) => {
     console.log(key);
     const newArray = itemArray.filter((item) => item.key !== key);
@@ -45,17 +53,20 @@ export function HomeScreen2({ navigation }) {
         </View>
       </Modal>
       <FlatList
+        style={styles.flatListContainer}
         data={itemArray}
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={styles.itemContainer}
+            style={styles.itemButton}
             onPress={() => navigation.navigate("Update Item", item)} //Send the object selected to the update screen
             onLongPress={() => deleteItem(item.key)}
           >
             <Text style={styles.text}>{item.name}</Text>
+            <Check />
           </TouchableOpacity>
         )}
       />
+
       <MaterialIcons
         style={styles.addButton}
         name="add"
@@ -71,13 +82,25 @@ const styles = StyleSheet.create({
     padding: 15,
     flex: 1,
   },
-  itemContainer: {
+  flatListContainer: {
+    //flex: 1,
+    //width: "100%",
+    //flexDirection: "row",
+    //backgroundColor: "red",
+  },
+  itemButton: {
     //borderWidth: 3,
     //borderColor: "dodgerblue",
     backgroundColor: "dodgerblue",
     borderRadius: 15,
     padding: 10,
     marginVertical: 5,
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  checkBox: {
+    marginLeft: 10,
   },
   text: {
     fontSize: 20,
