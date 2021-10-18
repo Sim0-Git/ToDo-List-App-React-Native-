@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, Button } from "react-native";
 import {
+  TouchableHighlight,
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 
-export function ItemComponent(props, route) {
+export function ItemComponent(props, route, onPress) {
   return (
-    <TouchableWithoutFeedback style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text style={styles.text}>
         {props.itemName}
         {props.text}
       </Text>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 }
 
@@ -23,7 +24,8 @@ const styles = StyleSheet.create({
     //backgroundColor: "dodgerblue",
     borderRadius: 20,
     width: 300,
-    padding: 15,
+    padding: 10,
+    marginBottom: 10,
   },
   text: {
     fontSize: 20,

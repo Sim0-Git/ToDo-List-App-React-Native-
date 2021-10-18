@@ -34,7 +34,7 @@ function AddScreen({ navigation }) {
   };
   //Just checking the array content
   for (let i = 0; i < itemsArray.length; i++) {
-    console.log("Item in the array: " + itemsArray[i]);
+    //console.log("Item in the array: " + itemsArray[i]);
   }
 
   const completeItem = (index) => {

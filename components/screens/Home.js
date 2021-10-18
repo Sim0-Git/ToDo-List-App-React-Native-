@@ -7,13 +7,15 @@ import {
   SafeAreaView,
   Image,
   TouchableHighlight,
+  TouchableOpacity,
   Alert,
   FlatList,
 } from "react-native";
 import Constants from "expo-constants";
 import { ItemComponent } from "../ItemComponent";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-function HomeScreen({ navigation, route }) {
+function HomeScreen({ navigation, route, onPress }) {
   const handlePress = () => {
     alert("fuck you");
   };
@@ -23,27 +25,56 @@ function HomeScreen({ navigation, route }) {
       { text: "No" },
     ]);
   };
-  const renderComponent = () => {};
 
   const { item } = route.params; //Get value name form the Add screen
 
   const [itemsArray, setItemsArray] = useState([]);
-  itemsArray.unshift(item); //Add the item to the array
+  // useEffect(() => {
+  //   itemsArray.push(item); //Add the item to the array
+  // });
+  itemsArray.push(item); //Add the item to the array
+  console.log("Array just updated: " + itemsArray);
+  console.log("Array length: " + itemsArray.length);
 
-  console.log(itemsArray);
+  const removeItem = (index) => {
+    // let currentIndex;
+    // {
+    //   currentIndex = itemsArray.map((item, index) => {
+    //     return { item, index };
+    //   });
+    // }
+    //let itemsCopy = [...itemsArray];
+    //itemsCopy.splice(currentIndex, 1);
+    // let newArray = itemsArray.filter((item) => {
+    //   return item !== "Hhhh";
+    // });
+    // setItemsArray(newArray);
+    //setItemsArray(itemsCopy);
+    //console.log("At index: " + index);
+    console.log("item deleted: " + item);
+    console.log("New Array: " + itemsArray);
+  };
 
   return (
     <View style={styles.container}>
       {/*Component for rendering every item added in the list */}
-      <View>
-        {/*The array has already one undefined element,
+      <TouchableOpacity onPress={removeItem}>
+        <View>
+          {/*The array has already one undefined element,
          in order to not render that I am using this condition */}
-        {itemsArray[0] == undefined //if hte array at position 0 is undefined then remove that element
-          ? itemsArray.splice([0])
-          : itemsArray.map((item, index) => {
-              return <ItemComponent itemName={item} /*text={item}*/ />;
-            })}
-      </View>
+          {itemsArray[0] == undefined //if hte array at position 0 is undefined then remove that element
+            ? itemsArray.splice(0, 1)
+            : itemsArray.map((item, index) => {
+                return (
+                  <ItemComponent
+                    itemName={item}
+                    //onPress={() => completeItem(index)} /*text={item}*/
+                  />
+                );
+              })}
+        </View>
+      </TouchableOpacity>
+
       {/* <Text>{route.params.name} </Text> */}
       <Text onPress={pressDelete}>Item</Text>
       {/* <TouchableHighlight onPress={handlePress}>
@@ -61,12 +92,12 @@ function HomeScreen({ navigation, route }) {
 
       <TouchableHighlight
         style={styles.button}
-        onPress={() => navigation.navigate("Add Item")}
+        onPress={() => navigation.navigate("Add Item")} //Navigate to the Add Item screen
       >
         <Text style={{ fontSize: 20, color: "white" }}>Add Item</Text>
       </TouchableHighlight>
       <Button
-        onPress={() => navigation.navigate("Update Item")}
+        onPress={() => navigation.navigate("Update Item")} //Navigate to the Update Item screen
         title="Update item"
       />
     </View>

@@ -8,12 +8,18 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   KeyboardAvoidingView,
+  FlatList,
 } from "react-native";
+import { Formik } from "formik";
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-function UpdateScreen({ navigation }) {
+function UpdateScreen({ route, navigation }) {
+  const { name } = route.params;
+  const { key } = route.params;
+  console.log(key);
   const [input, setInput] = useState();
+
   //function that handle the press of the button
   const handelPress = () => {
     Alert.alert("Update", "This item has been updated", [{ text: "Close" }]);
@@ -25,14 +31,19 @@ function UpdateScreen({ navigation }) {
     <KeyboardAwareScrollView style={styles.container}>
       <View style={styles.innerContainer}>
         <View style={styles.inputContainer}>
-          <TextInput style={styles.input} placeholder="New item">
-            Carrots
+          <TextInput
+            style={styles.input}
+            placeholder="New item"
+            //onChangeText={(input) => setInput(input)}
+            value={input}
+          >
+            {name}
+            {/*Get name of the item from the home page  */}
           </TextInput>
           <TouchableOpacity>
             <FontAwesome5 name="eraser" size={24} color="#F59133" />
           </TouchableOpacity>
         </View>
-
         <TouchableHighlight
           style={styles.button}
           onPress={handelPress}
@@ -58,6 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: "space-around",
     height: 250, //Don' like this
+    marginTop: 100,
   },
   inputContainer: {
     display: "flex",
