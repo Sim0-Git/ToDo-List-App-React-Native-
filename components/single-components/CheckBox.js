@@ -19,7 +19,9 @@ export default function Check() {
         style={styles.checkBox}
         value={isSelected}
         onValueChange={setSelection}
-      ></CheckBox>
+        //containerStyle={{ backgroundColor: "white" }}
+        tintColors={{ true: "white", false: "red" }}
+      />
     </TouchableOpacity>
   );
 }

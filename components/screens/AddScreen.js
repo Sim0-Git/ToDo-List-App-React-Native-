@@ -5,7 +5,6 @@ import {
   View,
   Button,
   SafeAreaView,
-  Image,
   TouchableHighlight,
   TouchableOpacity,
   Alert,
@@ -13,7 +12,7 @@ import {
   Modal,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import ItemForm from "./itemForm";
+import ItemForm from "../single-components/itemForm";
 
 export function AddScreen2({ navigation }) {
   const [modalOpen, setmodalOpen] = useState(false);

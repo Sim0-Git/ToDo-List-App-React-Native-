@@ -10,7 +10,6 @@ import {
   KeyboardAvoidingView,
   FlatList,
 } from "react-native";
-import { Formik } from "formik";
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -78,19 +77,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     borderRadius: 15,
-    borderWidth: 2,
+    borderWidth: 3,
     padding: 12,
     borderColor: "dodgerblue",
     height: 50,
   },
   input: {
     fontSize: 18,
+    fontWeight: "bold",
+    flex: 1,
   },
   button: {
     borderRadius: 15,
-    width: 100,
-    height: 40,
-    alignSelf: "flex-end",
+    //width: 100,
+    height: 45,
+    //alignSelf: "flex-end",
     justifyContent: "center",
     backgroundColor: "dodgerblue",
   },
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 18,
     color: "white",
+    fontWeight: "bold",
   },
 });
 

@@ -12,8 +12,8 @@ import {
   Modal,
 } from "react-native";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
-import ItemForm from "./itemForm";
-import Check from "./CheckBox";
+import ItemForm from "../single-components/itemForm";
+import Check from "../single-components/CheckBox";
 
 export function HomeScreen2({ route, navigation }) {
   const { key } = route.params;
@@ -43,17 +43,23 @@ export function HomeScreen2({ route, navigation }) {
     <View style={styles.container}>
       <Modal visible={modalOpen} animationType="slide">
         <View>
-          <Ionicons
-            onPress={() => setAddModalOpen(false)}
-            name="arrow-back"
-            size={28}
-            color="black"
-          />
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Ionicons
+              onPress={() => setAddModalOpen(false)}
+              name="arrow-back"
+              size={28}
+              color="black"
+              style={{ marginTop: 15, marginBottom: 15 }}
+            />
+            <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 25 }}>
+              Add item
+            </Text>
+          </View>
+
           <ItemForm addItem={addItem} />
         </View>
       </Modal>
       <FlatList
-        style={styles.flatListContainer}
         data={itemArray}
         renderItem={({ item }) => (
           <TouchableOpacity
@@ -81,12 +87,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     flex: 1,
-  },
-  flatListContainer: {
-    //flex: 1,
-    //width: "100%",
-    //flexDirection: "row",
-    //backgroundColor: "red",
+    //marginTop: 20,
+    backgroundColor: "#D0E7FF",
   },
   itemButton: {
     //borderWidth: 3,
@@ -99,22 +101,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  checkBox: {
-    marginLeft: 10,
-  },
   text: {
     fontSize: 20,
     fontWeight: "bold",
     color: "white",
+    paddingLeft: 15,
   },
   addButton: {
-    backgroundColor: "red",
-    width: 50,
-    height: 50,
     borderRadius: 30,
-    padding: 0,
     backgroundColor: "dodgerblue",
     color: "white",
     alignSelf: "flex-end",
+    marginRight: 10,
+    marginTop: 10,
+    elevation: 8,
   },
 });

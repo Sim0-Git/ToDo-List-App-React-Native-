@@ -1,22 +1,20 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import HomeScreen from "./components/screens/Home";
-import AddScreen from "./components/screens/Add";
 import UpdateScreen from "./components/screens/Update";
-
 import { HomeScreen2 } from "./components/screens/HomeScreen";
 import { AddScreen2 } from "./components/screens/AddScreen";
+import { SplashScreen } from "./components/screens/Splash";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Splash">
         <Stack.Group>
           <Stack.Screen
             initialParams={{ input: null }}
@@ -24,10 +22,15 @@ export default function App() {
             component={HomeScreen2}
             options={{
               title: "My List",
-              headerStyle: { backgroundColor: "lightblue" },
-              headerTintColor: "dodgerblue",
+              headerStyle: { backgroundColor: "dodgerblue" },
+              headerTintColor: "white",
               headerTitleAlign: "center",
             }} //headerShown: false //Hide the header
+          />
+          <Stack.Screen
+            name="Splash"
+            component={SplashScreen}
+            options={{ headerShown: false }}
           />
         </Stack.Group>
         <Stack.Group
