@@ -1,13 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import {
-  MaterialIcons,
-  Ionicons,
-  FontAwesome,
-  FontAwesome5,
-  Octicons,
-  Feather,
-} from "@expo/vector-icons";
+import { Octicons, Feather } from "@expo/vector-icons";
 
 // export default class Splash extends Component {
 //   componentDidMount() {
@@ -16,7 +9,14 @@ import {
 //       this.props.navigation.navigate("Home");
 //     }, 2000);
 //   }
+
 export function SplashScreen({ navigation }) {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate("Home");
+    }, 2000);
+  });
+
   return (
     <View style={styles.container}>
       <View>

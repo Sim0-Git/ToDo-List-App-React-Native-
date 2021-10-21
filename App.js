@@ -5,9 +5,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import UpdateScreen from "./components/screens/Update";
-import { HomeScreen2 } from "./components/screens/HomeScreen";
 import { AddScreen2 } from "./components/screens/AddScreen";
 import { SplashScreen } from "./components/screens/Splash";
+import { HomeScreen } from "./components/screens/HomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -19,12 +19,13 @@ export default function App() {
           <Stack.Screen
             initialParams={{ input: null }}
             name="Home"
-            component={HomeScreen2}
+            component={HomeScreen}
             options={{
               title: "My List",
               headerStyle: { backgroundColor: "dodgerblue" },
               headerTintColor: "white",
               headerTitleAlign: "center",
+              headerLeft: null,
             }}
           />
           <Stack.Screen

@@ -16,7 +16,7 @@ import ItemForm from "../single-components/itemForm";
 import Check from "../single-components/CheckBox";
 import UpdateScreen from "../../components/screens/Update";
 
-export function HomeScreen2({ route, navigation }) {
+export function HomeScreen({ route, navigation }) {
   const { key } = route.params; //Try to get these params from the update screen
   const { name } = route.params; //Try to get these params from the update screen
   console.log("Item name: " + name); //Just check the received data
@@ -24,7 +24,7 @@ export function HomeScreen2({ route, navigation }) {
 
   const [modalOpen, setAddModalOpen] = useState(false);
   const [itemArray, setItemArray] = useState([]);
-  const [input, setInput] = useState();
+  
   const [appInit, setAppInit] = useState(true);
 
   useEffect(() => {
