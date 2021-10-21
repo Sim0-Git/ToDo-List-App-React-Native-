@@ -13,11 +13,18 @@ import {
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-function UpdateScreen({ route, navigation }) {
+function UpdateScreen({ route, navigation, props }) {
   const { name } = route.params;
   const { key } = route.params;
-  console.log(key);
+  //console.log(key);
   const [input, setInput] = useState();
+
+  const onChangeText = (text) => {
+    setInput(text);
+  };
+  const updateItem = (key) => {
+    props.update(key);
+  };
 
   //function that handle the press of the button
   const handelPress = () => {
@@ -33,8 +40,8 @@ function UpdateScreen({ route, navigation }) {
           <TextInput
             style={styles.input}
             placeholder="New item"
-            onChangeText={(input) => setInput(input)}
-            value={input}
+            onChangeText={onChangeText}
+            //value={input}
           >
             {/* {name} */}
             {/*Get name of the item from the home page  */}
@@ -46,7 +53,10 @@ function UpdateScreen({ route, navigation }) {
 
         <TouchableHighlight
           style={styles.button}
-          onPress={() => navigation.navigate("Home", { key, name })}
+          //onPress={() => navigation.navigate("Home", { key, name })}
+          onPress={() => {
+            setInput(updateItem(key));
+          }}
           {...console.log(input)}
           underlayColor="lightblue"
         >

@@ -12,11 +12,11 @@ import {
 } from "react-native";
 import { Formik } from "formik";
 
-export default function itemForm({ addItem, navigation }) {
+export default function itemForm({ addItem }) {
   return (
     <View style={styles.container}>
       <Formik
-        initialValues={{ name: "", key: 0 }}
+        initialValues={{ name: "", key: "" }}
         onSubmit={(value, actions) => {
           actions.resetForm(); //Reset the form
           addItem(value);
