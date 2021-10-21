@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 200,
-    //marginBottom: 100,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

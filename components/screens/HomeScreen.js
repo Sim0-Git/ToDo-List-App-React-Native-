@@ -142,12 +142,9 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     flex: 1,
-    //marginTop: 20,
     backgroundColor: "#D0E7FF",
   },
   itemButton: {
-    //borderWidth: 3,
-    //borderColor: "dodgerblue",
     backgroundColor: "dodgerblue",
     borderRadius: 15,
     padding: 10,

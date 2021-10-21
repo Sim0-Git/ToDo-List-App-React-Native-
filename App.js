@@ -25,7 +25,7 @@ export default function App() {
               headerStyle: { backgroundColor: "dodgerblue" },
               headerTintColor: "white",
               headerTitleAlign: "center",
-            }} //headerShown: false //Hide the header
+            }}
           />
           <Stack.Screen
             name="Splash"

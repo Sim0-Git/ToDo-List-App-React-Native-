@@ -49,10 +49,8 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "dodgerblue",
     padding: 30,
-    //flex:1,
   },
   innerContainer: {
-    //flex: 1,
     marginTop: 100,
     backgroundColor: "white",
     padding: 12,
@@ -74,9 +72,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "dodgerblue",
     borderRadius: 15,
-    //width: 250,
     height: 45,
-    //alignSelf: "flex-end",
   },
   text: {
     fontSize: 18,
