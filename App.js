@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import UpdateScreen from "./components/screens/Update";
-import { AddScreen2 } from "./components/screens/AddScreen";
+//import { AddScreen2 } from "./components/screens/AddScreen";
 import { SplashScreen } from "./components/screens/Splash";
 import { HomeScreen } from "./components/screens/HomeScreen";
 
@@ -27,11 +27,17 @@ export default function App() {
               headerTitleAlign: "center",
               headerLeft: null,
             }}
+            
           />
           <Stack.Screen
             name="Splash"
             component={SplashScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Update Item"
+            component={UpdateScreen}
+            //options={{ headerStyle: { backgroundColor: "dodgerblue" } }}
           />
         </Stack.Group>
         <Stack.Group
@@ -39,8 +45,12 @@ export default function App() {
             presentation: "modal",
           }}
         >
-          <Stack.Screen name="Add Item" component={AddScreen2} />
-          <Stack.Screen name="Update Item" component={UpdateScreen} />
+          {/* <Stack.Screen name="Add Item" component={AddScreen2} />
+          <Stack.Screen
+            name="Update Item"
+            component={UpdateScreen}
+            options={{ headerStyle: { backgroundColor: "dodgerblue" } }}
+          /> */}
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

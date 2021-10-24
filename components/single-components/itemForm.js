@@ -13,17 +13,29 @@ import {
 import { Formik } from "formik";
 
 export default function itemForm({ addItem }) {
+  const [textInput, setTextInput] = useState();
   const [validInput, setValidInput] = useState(false);
 
-  const onTextChange = (value) => {
-    if (value.lenth >= 3) {
-      setValidInput(true);
+  const onValidate = (values) => {
+    //Check if the input from the user is empty
+    let invalid = {};
+
+    if (!values.name) {
+      alert("Item name cannot be empty");
+      invalid.name = "Required";
     }
+    return invalid;
   };
+  // const checkMinInput = (value) => {
+  //   if (value.length >= 3) {
+  //     //setValidInput(true);
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
       <Formik
+        validate={onValidate}
         initialValues={{ name: "", key: "" }}
         onSubmit={(value, actions) => {
           actions.resetForm(); //Reset the form
@@ -40,10 +52,10 @@ export default function itemForm({ addItem }) {
               value={props.values.name}
             />
             <TouchableOpacity
-              //style={validInput ? styles.button : styles.buttonDisabled}
+              //style={props.values.name ? styles.button : styles.buttonDisabled}
               style={styles.button}
               onPress={props.handleSubmit}
-              //disabled={validInput ? false : true}
+              //disabled={props.values.name ? false : true}
             >
               <Text style={styles.text}>Add</Text>
             </TouchableOpacity>
@@ -85,7 +97,7 @@ const styles = StyleSheet.create({
     height: 45,
   },
   buttonDisabled: {
-    backgroundColor: "lightgrey",
+    backgroundColor: "red",
   },
   text: {
     fontSize: 18,

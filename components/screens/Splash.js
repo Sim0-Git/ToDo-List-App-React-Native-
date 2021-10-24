@@ -28,13 +28,13 @@ export function SplashScreen({ navigation }) {
         />
         <Text style={styles.logoText}>ShopList</Text>
       </View>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Home")}
       >
         <Text style={styles.text}>Get started</Text>
         <Feather name="arrow-right-circle" size={40} color="white" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }

@@ -24,7 +24,7 @@ export function HomeScreen({ route, navigation }) {
 
   const [modalOpen, setAddModalOpen] = useState(false);
   const [itemArray, setItemArray] = useState([]);
-  
+
   const [appInit, setAppInit] = useState(true);
 
   useEffect(() => {
@@ -36,7 +36,6 @@ export function HomeScreen({ route, navigation }) {
       storeData();
       console.log("Storing data....");
     }
-
     storeData();
   }, [itemArray]);
 
@@ -45,9 +44,6 @@ export function HomeScreen({ route, navigation }) {
     setItemArray((currentItem) => {
       return [item, ...currentItem];
     });
-    // const key = new Date().getTime().toString();
-    // item = { key: key, name: input };
-    // setItemArray([...itemArray, item]);
 
     setAddModalOpen(false);
   };
