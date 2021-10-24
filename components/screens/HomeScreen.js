@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   Alert,
+  Button,
   FlatList,
   Modal,
 } from "react-native";
@@ -39,6 +40,7 @@ export function HomeScreen({ route, navigation }) {
     storeData();
   }, [itemArray]);
 
+  //Method that add an item into the array
   const addItem = (item) => {
     item.key = Math.random().toString();
     setItemArray((currentItem) => {
@@ -48,6 +50,7 @@ export function HomeScreen({ route, navigation }) {
     setAddModalOpen(false);
   };
 
+  //Working on this
   const updateItem = (key) => {
     console.log(key);
     setItemArray((oldArray) => {
@@ -61,11 +64,24 @@ export function HomeScreen({ route, navigation }) {
     });
   };
 
+  //Method that delete a single item from the list when the user lon-press the item
   const deleteItem = (key, name) => {
     console.log("Key of item to be deleted: " + key);
     console.log("Item name to be deleted : " + name);
     const newArray = itemArray.filter((item) => item.key !== key);
     setItemArray(newArray);
+  };
+  //Method that delete all the items into the array when a button is pressed
+  const deleteAllItems = () => {
+    Alert.alert("Alert", "Do you want to delete all the itmes?", [
+      {
+        text: "Confirm",
+        onPress: () => setItemArray([]),
+      },
+      {
+        text: "Cancel",
+      },
+    ]);
   };
 
   const storeData = async () => {
@@ -123,13 +139,23 @@ export function HomeScreen({ route, navigation }) {
           )
         )}
       />
-      {/* <UpdateScreen updateItem={updateItem} /> */}
-      <MaterialIcons
-        style={styles.addButton}
-        name="add"
-        size={50}
-        onPress={() => setAddModalOpen(true)}
-      />
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={styles.deleteAllBtn}
+          onPress={() => deleteAllItems()}
+        >
+          <Text style={{ fontSize: 18, color: "white", fontWeight: "bold" }}>
+            Delete all
+          </Text>
+        </TouchableOpacity>
+        {/* <UpdateScreen updateItem={updateItem} /> */}
+        <MaterialIcons
+          style={styles.addButton}
+          name="add"
+          size={50}
+          onPress={() => setAddModalOpen(true)}
+        />
+      </View>
     </View>
   );
 }
@@ -162,6 +188,18 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     marginRight: 10,
     marginTop: 10,
-    elevation: 8,
+    elevation: 6,
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  deleteAllBtn: {
+    backgroundColor: "dodgerblue",
+    borderRadius: 25,
+    maxHeight: 50,
+    padding: 10,
+    elevation: 6,
   },
 });
