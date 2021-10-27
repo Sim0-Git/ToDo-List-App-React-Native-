@@ -8,6 +8,14 @@ import UpdateScreen from "./components/screens/Update";
 //import { AddScreen2 } from "./components/screens/AddScreen";
 import { SplashScreen } from "./components/screens/Splash";
 import { HomeScreen } from "./components/screens/HomeScreen";
+import { Signup } from "./components/screens/Signup";
+import { Signin } from "./components/screens/Signin";
+
+//Firebase
+import { firebaseConfig } from "./config";
+import { initializeApp } from "@firebase/app";
+
+initializeApp(firebaseConfig); //initialize firebase
 
 const Stack = createStackNavigator();
 
@@ -27,12 +35,21 @@ export default function App() {
               headerTitleAlign: "center",
               headerLeft: null,
             }}
-            
           />
           <Stack.Screen
             name="Splash"
             component={SplashScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Signin"
+            component={Signin}
+            options={{ headerLeft: null }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{ headerLeft: null }}
           />
           <Stack.Screen
             name="Update Item"
