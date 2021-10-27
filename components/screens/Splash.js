@@ -13,7 +13,7 @@ import { Octicons, Feather } from "@expo/vector-icons";
 export function SplashScreen({ navigation }) {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate("Signin");
+      navigation.navigate("Login");
     }, 2000);
   });
 

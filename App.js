@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+//Import all screens
 import UpdateScreen from "./components/screens/Update";
 //import { AddScreen2 } from "./components/screens/AddScreen";
 import { SplashScreen } from "./components/screens/Splash";
@@ -42,14 +43,23 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="Signin"
+            name="Login"
             component={Signin}
-            options={{ headerLeft: null }}
+            options={{
+              headerLeft: null,
+              headerStyle: { backgroundColor: "white" },
+              headerTintColor: "dodgerblue",
+              headerTitleStyle: { fontSize: 28 },
+            }}
           />
           <Stack.Screen
             name="Signup"
             component={Signup}
-            options={{ headerLeft: null }}
+            options={{
+              headerLeft: null,
+              headerStyle: { backgroundColor: "dodgerblue" },
+              headerTintColor: "white",
+            }}
           />
           <Stack.Screen
             name="Update Item"
