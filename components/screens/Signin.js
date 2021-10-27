@@ -36,7 +36,7 @@ export function Signin({ props, navigation }) {
       </View>
       <View style={styles.signup}>
         <Text style={styles.outerText}>
-          New to ShopList?{"  "}
+          New to ShopList ?{"  "}
           <Text
             style={styles.innerText}
             onPress={() => navigation.navigate("Signup")}
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     color: "dodgerblue",
   },
   inputsContainer: {
-    flex: 1,
+    flex: 1.2,
     padding: 20,
     //backgroundColor: "green",
   },
