@@ -7,35 +7,58 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Octicons } from "@expo/vector-icons";
+import * as Animatable from "react-native-animatable";
 
-export function Signup(props) {
+export function Signup({ props, navigation }) {
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer}>
+      <Animatable.View style={styles.logoContainer} animation="bounceIn">
         <Octicons
           style={{ marginLeft: 25 }}
           name="checklist"
           size={100}
-          color="dodgerblue"
+          color="white"
         />
         <Text style={styles.logoText}>ShopList</Text>
-      </View>
-      <View style={styles.inputsContainer}>
-        <TextInput style={styles.inputs} placeholder="Email" />
-        <TextInput style={styles.inputs} placeholder="Full name" />
-        <TextInput style={styles.inputs} placeholder="Password" />
-        <TextInput style={styles.inputs} placeholder="Confirm password" />
-      </View>
-      <View style={styles.signup}>
-        <TouchableOpacity
-          style={styles.touchableSignup}
-          onPress={() => {
-            navigation.navigate("Home");
-          }}
-        >
-          <Text style={styles.signupText}>Signup</Text>
-        </TouchableOpacity>
-      </View>
+      </Animatable.View>
+      <Animatable.View
+        style={{
+          flex: 2,
+          backgroundColor: "white",
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
+        }}
+        animation="fadeInUpBig"
+      >
+        <View style={styles.inputsContainer}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: "dodgerblue",
+              fontWeight: "bold",
+              marginBottom: 25,
+              padding: 10,
+              alignSelf: "center",
+            }}
+          >
+            Create account
+          </Text>
+          <TextInput style={styles.inputs} placeholder="Email" />
+          <TextInput style={styles.inputs} placeholder="Full name" />
+          <TextInput style={styles.inputs} placeholder="Password" />
+          <TextInput style={styles.inputs} placeholder="Confirm password" />
+        </View>
+        <View style={styles.signup}>
+          <TouchableOpacity
+            style={styles.touchableSignup}
+            onPress={() => {
+              navigation.navigate("Home");
+            }}
+          >
+            <Text style={styles.signupText}>Signup</Text>
+          </TouchableOpacity>
+        </View>
+      </Animatable.View>
     </View>
   );
 }
@@ -43,23 +66,23 @@ export function Signup(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "dodgerblue",
   },
   logoContainer: {
-    flex: 1.3,
+    flex: 0.65,
     alignItems: "center",
-    justifyContent: "center",
-    //backgroundColor: "red",
+    justifyContent: "flex-end",
+    backgroundColor: "dodgerblue",
     padding: 20,
   },
   logoText: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: "bold",
-    color: "dodgerblue",
+    color: "white",
   },
   inputsContainer: {
     flex: 2.5,
-    padding: 20,
+    padding: 25,
     //backgroundColor: "green",
   },
   inputs: {
@@ -72,9 +95,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   signup: {
-    //flex: 1,
+    //flex: 0.2,
     marginBottom: 30,
-    padding: 20,
+    padding: 25,
   },
   touchableSignup: {
     backgroundColor: "dodgerblue",

@@ -50,6 +50,7 @@ export default function App() {
               headerStyle: { backgroundColor: "white" },
               headerTintColor: "dodgerblue",
               headerTitleStyle: { fontSize: 28 },
+              headerShown: false,
             }}
           />
           <Stack.Screen
@@ -59,6 +60,7 @@ export default function App() {
               headerLeft: null,
               headerStyle: { backgroundColor: "dodgerblue" },
               headerTintColor: "white",
+              headerShown: false,
             }}
           />
           <Stack.Screen

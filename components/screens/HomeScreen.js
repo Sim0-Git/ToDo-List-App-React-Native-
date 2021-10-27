@@ -164,7 +164,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     flex: 1,
-    backgroundColor: "#D0E7FF",
+    backgroundColor: "white",
+    //backgroundColor: "#D0E7FF",
   },
   itemButton: {
     backgroundColor: "dodgerblue",
@@ -197,7 +198,7 @@ const styles = StyleSheet.create({
   },
   deleteAllBtn: {
     backgroundColor: "dodgerblue",
-    borderRadius: 25,
+    borderRadius: 20,
     maxHeight: 50,
     padding: 10,
     elevation: 6,

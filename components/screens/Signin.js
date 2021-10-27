@@ -6,84 +6,84 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { Octicons } from "@expo/vector-icons";
+import {
+  Octicons,
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import * as Animatable from "react-native-animatable";
+import { LoginBody } from "../single-components/loginBody";
 
 export function Signin({ props, navigation }) {
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Octicons
-          style={{ marginLeft: 25 }}
-          name="checklist"
-          size={100}
-          color="dodgerblue"
-        />
-        <Text style={styles.logoText}>ShopList</Text>
-      </View>
-      <View style={styles.inputsContainer}>
-        <TextInput style={styles.inputs} placeholder="Enter your email" />
-        <TextInput style={styles.inputs} placeholder="Enter your password" />
-      </View>
-      <View style={styles.signin}>
-        <TouchableOpacity
-          style={styles.touchableSignin}
-          onPress={() => {
-            navigation.navigate("Home");
-          }}
-        >
-          <Text style={styles.signinText}>Login</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.signup}>
-        <Text style={styles.outerText}>
-          New to ShopList ?{"  "}
-          <Text
-            style={styles.innerText}
-            onPress={() => navigation.navigate("Signup")}
+      <Animatable.View
+        style={{ flex: 0.8, justifyContent: "flex-end" }}
+        animation="bounceIn"
+      >
+        <View style={styles.logoContainer}>
+          <Octicons
+            style={{ marginLeft: 25 }}
+            name="checklist"
+            size={100}
+            color="white"
+          />
+          <Text style={styles.logoText}>ShopList</Text>
+        </View>
+      </Animatable.View>
+
+      <Animatable.View style={{ flex: 2 }} animation="fadeInUpBig">
+        <LoginBody />
+        <View style={styles.signin}>
+          <TouchableOpacity
+            style={styles.touchableSignin}
+            onPress={() => {
+              navigation.navigate("Home");
+            }}
           >
-            Register
+            <Text style={styles.signinText}>Login</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.signup} animation="fadeInUpBig">
+          <Text style={styles.outerText}>
+            New to ShopList ?{"  "}
+            <Text
+              style={styles.innerText}
+              onPress={() => navigation.navigate("Signup")}
+            >
+              Register
+            </Text>
           </Text>
-        </Text>
-      </View>
+        </View>
+      </Animatable.View>
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "dodgerblue",
   },
   logoContainer: {
-    flex: 1,
+    flex: 0.8,
     alignItems: "center",
-    justifyContent: "center",
-    //backgroundColor: "red",
+    justifyContent: "flex-end",
+    backgroundColor: "dodgerblue",
     padding: 20,
   },
   logoText: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: "bold",
-    color: "dodgerblue",
-  },
-  inputsContainer: {
-    flex: 1.2,
-    padding: 20,
-    //backgroundColor: "green",
-  },
-  inputs: {
-    backgroundColor: "white",
-    height: 50,
-    borderRadius: 20,
-    fontSize: 18,
-    paddingLeft: 15,
-    elevation: 8,
-    marginBottom: 30,
+    color: "white",
   },
   signin: {
-    flex: 0.3,
+    flex: 0.4,
     padding: 20,
     marginTop: 0,
-    //backgroundColor: "red",
+    justifyContent: "flex-end",
+    backgroundColor: "white",
   },
   touchableSignin: {
     backgroundColor: "dodgerblue",
@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
   signup: {
     flex: 0.5,
     alignItems: "center",
-    justifyContent: "center",
-    //backgroundColor: "red",
+    justifyContent: "flex-start",
+    backgroundColor: "white",
   },
   outerText: {
     fontSize: 15,

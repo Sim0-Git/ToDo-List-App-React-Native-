@@ -1,6 +1,7 @@
 import React, { Component, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Octicons, Feather } from "@expo/vector-icons";
+import * as Animatable from "react-native-animatable";
 
 // export default class Splash extends Component {
 //   componentDidMount() {
@@ -19,7 +20,7 @@ export function SplashScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View>
+      <Animatable.View animation="bounceIn">
         <Octicons
           style={{ marginLeft: 25 }}
           name="checklist"
@@ -27,7 +28,7 @@ export function SplashScreen({ navigation }) {
           color="white"
         />
         <Text style={styles.logoText}>ShopList</Text>
-      </View>
+      </Animatable.View>
       {/* <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Home")}
