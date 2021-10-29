@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
+import { SignupBody } from "../single-components/signupBody";
 
 export function Signup({ props, navigation }) {
   return (
@@ -30,24 +31,7 @@ export function Signup({ props, navigation }) {
         }}
         animation="fadeInUpBig"
       >
-        <View style={styles.inputsContainer}>
-          <Text
-            style={{
-              fontSize: 20,
-              color: "dodgerblue",
-              fontWeight: "bold",
-              marginBottom: 25,
-              padding: 10,
-              alignSelf: "center",
-            }}
-          >
-            Create account
-          </Text>
-          <TextInput style={styles.inputs} placeholder="Email" />
-          <TextInput style={styles.inputs} placeholder="Full name" />
-          <TextInput style={styles.inputs} placeholder="Password" />
-          <TextInput style={styles.inputs} placeholder="Confirm password" />
-        </View>
+        <SignupBody />
         <View style={styles.signup}>
           <TouchableOpacity
             style={styles.touchableSignup}
@@ -80,24 +64,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
   },
-  inputsContainer: {
-    flex: 2.5,
-    padding: 25,
-    //backgroundColor: "green",
-  },
-  inputs: {
-    backgroundColor: "white",
-    height: 50,
-    borderRadius: 20,
-    fontSize: 18,
-    paddingLeft: 15,
-    elevation: 8,
-    marginBottom: 15,
-  },
   signup: {
     //flex: 0.2,
     marginBottom: 30,
-    padding: 25,
+    padding: 20,
   },
   touchableSignup: {
     backgroundColor: "dodgerblue",

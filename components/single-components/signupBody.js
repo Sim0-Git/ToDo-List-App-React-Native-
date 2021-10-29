@@ -14,14 +14,14 @@ import {
   Entypo,
 } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import * as Animatable from "react-native-animatable";
 
-export function LoginBody() {
+export function SignupBody() {
   const [data, setData] = useState({
     email: "",
     password: "",
     checkTextInputChange: false,
-    secureTextEntry: true,
+    securePasswordEntry: true,
+    secureConfirmPasswordEntry: true,
   });
 
   const textInputChange = (value) => {
@@ -45,14 +45,26 @@ export function LoginBody() {
       password: value,
     });
   };
-  const updateSecureTextEntry = () => {
+  const updateSecurePasswordEntry = () => {
     setData({
       ...data,
-      secureTextEntry: !data.secureTextEntry,
+      securePasswordEntry: !data.securePasswordEntry,
+    });
+  };
+  const handelConfirmPasswordChange = (value) => {
+    setData({
+      ...data,
+      password: value,
+    });
+  };
+  const updateSecureConfirmPasswordEntry = () => {
+    setData({
+      ...data,
+      secureConfirmPasswordEntry: !data.secureConfirmPasswordEntry,
     });
   };
   return (
-    <View style={styles.inputsContainer} animation="fadeInUpBig">
+    <View style={styles.inputsContainer}>
       <Text
         style={{
           fontSize: 20,
@@ -63,15 +75,29 @@ export function LoginBody() {
           alignSelf: "center",
         }}
       >
-        Login to your account
+        Create account
       </Text>
-
       <TouchableWithoutFeedback style={styles.touchable}>
         <View style={{ flexDirection: "row" }}>
           <Ionicons name="person" size={20} color="dodgerblue" />
           <TextInput
             style={styles.inputs}
-            placeholder="Enter your email"
+            placeholder="Email"
+            onChangeText={(value) => textInputChange(value)}
+          />
+        </View>
+        <View>
+          {data.checkTextInputChange ? (
+            <Entypo name="check" size={20} color="green" />
+          ) : null}
+        </View>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback style={styles.touchable}>
+        <View style={{ flexDirection: "row" }}>
+          <Ionicons name="person" size={20} color="dodgerblue" />
+          <TextInput
+            style={styles.inputs}
+            placeholder="Full name"
             onChangeText={(value) => textInputChange(value)}
           />
         </View>
@@ -86,14 +112,37 @@ export function LoginBody() {
           <MaterialIcons name="lock" size={20} color="dodgerblue" />
           <TextInput
             style={styles.inputs}
-            placeholder="Enter your password"
-            secureTextEntry={data.secureTextEntry ? true : false}
+            placeholder="Password"
+            secureTextEntry={data.securePasswordEntry ? true : false}
             autoCapitalize="none"
             onChangeText={(value) => handelPasswordChange(value)}
           />
         </View>
-        <TouchableOpacity onPress={updateSecureTextEntry}>
-          {data.secureTextEntry ? (
+        <TouchableOpacity onPress={updateSecurePasswordEntry}>
+          {data.securePasswordEntry ? (
+            <MaterialCommunityIcons
+              name="eye-off-outline"
+              size={20}
+              color="grey"
+            />
+          ) : (
+            <MaterialCommunityIcons name="eye" size={20} color="grey" />
+          )}
+        </TouchableOpacity>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback style={styles.touchable}>
+        <View style={{ flexDirection: "row" }}>
+          <MaterialIcons name="lock" size={20} color="dodgerblue" />
+          <TextInput
+            style={styles.inputs}
+            placeholder="Confirm password"
+            secureTextEntry={data.secureConfirmPasswordEntry ? true : false}
+            autoCapitalize="none"
+            onChangeText={(value) => handelConfirmPasswordChange(value)}
+          />
+        </View>
+        <TouchableOpacity onPress={updateSecureConfirmPasswordEntry}>
+          {data.secureConfirmPasswordEntry ? (
             <MaterialCommunityIcons
               name="eye-off-outline"
               size={20}
@@ -110,11 +159,15 @@ export function LoginBody() {
 
 const styles = StyleSheet.create({
   inputsContainer: {
-    flex: 1,
+    flex: 2.5,
     padding: 20,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    backgroundColor: "white",
+    //backgroundColor: "green",
+  },
+  inputs: {
+    fontSize: 18,
+    marginLeft: 10,
   },
   touchable: {
     flexDirection: "row",
@@ -128,9 +181,5 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderColor: "lightgrey",
     padding: 14,
-  },
-  inputs: {
-    fontSize: 16,
-    marginLeft: 10,
   },
 });
