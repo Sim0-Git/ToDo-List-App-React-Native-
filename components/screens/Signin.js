@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { LoginBody } from "../single-components/loginBody";
+import * as AppColors from "../colorsApp";
 
 export function Signin({ navigation }) {
   const [email, setEmail] = useState("");
@@ -76,13 +77,13 @@ export function Signin({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "dodgerblue",
+    backgroundColor: AppColors.PRIMARY_COLOR,
   },
   logoContainer: {
     flex: 0.8,
     alignItems: "center",
     justifyContent: "flex-end",
-    backgroundColor: "dodgerblue",
+    backgroundColor: AppColors.PRIMARY_COLOR,
     padding: 20,
   },
   logoText: {
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   touchableSignin: {
-    backgroundColor: "dodgerblue",
+    backgroundColor: AppColors.PRIMARY_COLOR,
     borderRadius: 15,
     height: 45,
     justifyContent: "center",
@@ -124,6 +125,6 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     fontWeight: "bold",
     fontSize: 18,
-    color: "dodgerblue",
+    color: AppColors.PRIMARY_COLOR,
   },
 });
