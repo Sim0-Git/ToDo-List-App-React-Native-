@@ -1,22 +1,25 @@
-import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import {
-  Octicons,
-  Ionicons,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Octicons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { LoginBody } from "../single-components/loginBody";
 
-export function Signin({ props, navigation }) {
+export function Signin({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // const onSignInPress = () => {
+  //   firestore
+  //     .collection("myUsers")
+  //     .set({
+  //       email: "blah@ab.c",
+  //       password: "123",
+  //     })
+  //     .then((response) => {
+  //       // navigate home
+  //     });
+  // };
+
   return (
     <View style={styles.container}>
       <Animatable.View
@@ -35,18 +38,27 @@ export function Signin({ props, navigation }) {
       </Animatable.View>
 
       <Animatable.View style={{ flex: 2 }} animation="fadeInUpBig">
-        <LoginBody />
+        <LoginBody
+          onEmailInputChange={(data) => {
+            setEmail(data);
+          }}
+          onPasswordInputChange={(data) => {
+            setPassword(data);
+          }}
+        />
         <View style={styles.signin}>
           <TouchableOpacity
             style={styles.touchableSignin}
             onPress={() => {
-              navigation.navigate("Home");
+              // navigation.navigate("Home");
+              console.log("User email(login): " + email);
+              console.log("User password(login): " + password);
             }}
           >
             <Text style={styles.signinText}>Login</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.signup} animation="fadeInUpBig">
+        <View style={styles.signup}>
           <Text style={styles.outerText}>
             New to ShopList ?{"  "}
             <Text

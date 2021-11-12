@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -15,12 +15,46 @@ import { Signin } from "./components/screens/Signin";
 //Firebase
 import { firebaseConfig } from "./config";
 import { initializeApp } from "@firebase/app";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 initializeApp(firebaseConfig); //initialize firebase
+
+//export const app = initializeApp(firebaseConfig); //initialize firebase
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [auth, setAuth] = useState();
+  const FBAuth = getAuth();
+
+  const signupHandler = (email, password) => {
+    const [user, setUser] = useState();
+    useEffect(() => {
+      //function that handle the user object
+      onAuthStateChanged(FBAuth, (user) => {
+        if (user) {
+          setAuth(true);
+          setUser(user);
+        } else {
+          setAuth(false);
+          setUser(null);
+        }
+      });
+    });
+    createUserWithEmailAndPassword(FBAuth, email, password)
+      .then((userCredentials) => {
+        console.log(userCredentials);
+        setUser(userCredentials);
+        setAuth(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
@@ -53,7 +87,7 @@ export default function App() {
               headerShown: false,
             }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Signup"
             component={Signup}
             options={{
@@ -62,7 +96,20 @@ export default function App() {
               headerTintColor: "white",
               headerShown: false,
             }}
-          />
+          /> */}
+          <Stack.Screen
+            name="Signup"
+            options={{
+              headerLeft: null,
+              headerStyle: { backgroundColor: "dodgerblue" },
+              headerTintColor: "white",
+              headerShown: false,
+            }}
+          >
+            {(props) => (
+              <Signup {...props} handle={signupHandler} auth={auth} />
+            )}
+          </Stack.Screen>
           <Stack.Screen
             name="Update Item"
             component={UpdateScreen}

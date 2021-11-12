@@ -64,7 +64,7 @@ export function HomeScreen({ route, navigation }) {
     });
   };
 
-  //Method that delete a single item from the list when the user lon-press the item
+  //Method that delete a single item from the list when the user long-presses the item
   const deleteItem = (key, name) => {
     console.log("Key of item to be deleted: " + key);
     console.log("Item name to be deleted : " + name);
@@ -73,7 +73,7 @@ export function HomeScreen({ route, navigation }) {
   };
   //Method that delete all the items into the array when a button is pressed
   const deleteAllItems = () => {
-    Alert.alert("Alert", "Do you want to delete all the itmes?", [
+    Alert.alert("Alert", "Do you want to delete all the items?", [
       {
         text: "Confirm",
         onPress: () => setItemArray([]),

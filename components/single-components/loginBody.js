@@ -5,9 +5,9 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import {
-  Octicons,
   Ionicons,
   MaterialIcons,
   MaterialCommunityIcons,
@@ -15,8 +15,10 @@ import {
 } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as Animatable from "react-native-animatable";
+import KeyboardAvoidingView from "react-native/Libraries/Components/Keyboard/KeyboardAvoidingView";
+//import { auth } from "../../App";
 
-export function LoginBody() {
+export function LoginBody({ onEmailInputChange, onPasswordInputChange }) {
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -25,6 +27,7 @@ export function LoginBody() {
   });
 
   const textInputChange = (value) => {
+    onEmailInputChange(value);
     if (value.length !== 0) {
       setData({
         ...data,
@@ -39,7 +42,9 @@ export function LoginBody() {
       });
     }
   };
+
   const handelPasswordChange = (value) => {
+    onPasswordInputChange(value);
     setData({
       ...data,
       password: value,
@@ -53,57 +58,63 @@ export function LoginBody() {
   };
   return (
     <View style={styles.inputsContainer} animation="fadeInUpBig">
-      <Text
-        style={{
-          fontSize: 20,
-          color: "dodgerblue",
-          fontWeight: "bold",
-          marginBottom: 25,
-          padding: 10,
-          alignSelf: "center",
-        }}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        Login to your account
-      </Text>
+        <Text
+          style={{
+            fontSize: 20,
+            color: "dodgerblue",
+            fontWeight: "bold",
+            marginBottom: 25,
+            padding: 10,
+            alignSelf: "center",
+          }}
+        >
+          Login to your account
+        </Text>
 
-      <TouchableWithoutFeedback style={styles.touchable}>
-        <View style={{ flexDirection: "row" }}>
-          <Ionicons name="person" size={20} color="dodgerblue" />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Enter your email"
-            onChangeText={(value) => textInputChange(value)}
-          />
-        </View>
-        <View>
-          {data.checkTextInputChange ? (
-            <Entypo name="check" size={20} color="green" />
-          ) : null}
-        </View>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback style={styles.touchable}>
-        <View style={{ flexDirection: "row" }}>
-          <MaterialIcons name="lock" size={20} color="dodgerblue" />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Enter your password"
-            secureTextEntry={data.secureTextEntry ? true : false}
-            autoCapitalize="none"
-            onChangeText={(value) => handelPasswordChange(value)}
-          />
-        </View>
-        <TouchableOpacity onPress={updateSecureTextEntry}>
-          {data.secureTextEntry ? (
-            <MaterialCommunityIcons
-              name="eye-off-outline"
-              size={20}
-              color="grey"
+        <TouchableWithoutFeedback style={styles.touchable}>
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons name="person" size={20} color="dodgerblue" />
+            <TextInput
+              style={styles.inputs}
+              placeholder="Enter your email"
+              value={data.email}
+              onChangeText={(value) => textInputChange(value)}
             />
-          ) : (
-            <MaterialCommunityIcons name="eye" size={20} color="grey" />
-          )}
-        </TouchableOpacity>
-      </TouchableWithoutFeedback>
+          </View>
+          <View>
+            {data.checkTextInputChange ? (
+              <Entypo name="check" size={20} color="green" />
+            ) : null}
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback style={styles.touchable}>
+          <View style={{ flexDirection: "row" }}>
+            <MaterialIcons name="lock" size={20} color="dodgerblue" />
+            <TextInput
+              style={styles.inputs}
+              placeholder="Enter your password"
+              secureTextEntry={data.secureTextEntry ? true : false}
+              autoCapitalize="none"
+              value={data.password}
+              onChangeText={(value) => handelPasswordChange(value)}
+            />
+          </View>
+          <TouchableOpacity onPress={updateSecureTextEntry}>
+            {data.secureTextEntry ? (
+              <MaterialCommunityIcons
+                name="eye-off-outline"
+                size={20}
+                color="grey"
+              />
+            ) : (
+              <MaterialCommunityIcons name="eye" size={20} color="grey" />
+            )}
+          </TouchableOpacity>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </View>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,15 +7,59 @@ import {
   TouchableOpacity,
 } from "react-native";
 import {
-  Octicons,
   Ionicons,
   MaterialIcons,
   MaterialCommunityIcons,
   Entypo,
 } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { auth } from "../../App";
+import KeyboardAvoidingView from "react-native/Libraries/Components/Keyboard/KeyboardAvoidingView";
 
-export function SignupBody() {
+export function SignupBody({
+  onValidForm,
+  onEmailInputChange,
+  onFullNameInputChange,
+  onPasswordInputChange,
+  onConfirmPasswordInputChange,
+}) {
+  //----------Johannes---------------
+  const [validEmail, setValidEmail] = useState(false);
+  const [validPassword, setValidPassword] = useState(false);
+  const [validForm, setValidForm] = useState(false);
+
+  const validateEmail = (emailVal) => {
+    if (emailVal.indexOf("@") > 0) {
+      setValidEmail(true);
+    } else {
+      setValidEmail(false);
+    }
+  };
+  const validatePassword = (passwordVal) => {
+    if (passwordVal.length > 8) {
+      onPasswordInputChange(passwordVal);
+      setValidPassword(true);
+    } else {
+      setValidPassword(false);
+    }
+  };
+  useEffect(() => {
+    if (validEmail && validPassword) {
+      setValidForm(true);
+      onValidForm(true); //Enable the sign up button
+    } else {
+      setValidForm(false);
+      onValidForm(false); //Disable the sign up button
+    }
+  }, [validEmail, validPassword]);
+
+  //-----------------------------------
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [checkTextInputChange, setCheckTextInputChange] = useState(false);
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -24,8 +68,19 @@ export function SignupBody() {
     secureConfirmPasswordEntry: true,
   });
 
+  const handleSignin = () => {
+    auth
+      .createUserWithEmailAndPassword(data)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log(user.data.email);
+      })
+      .catch((error) => alert(error.message));
+  };
+
   const textInputChange = (value) => {
     if (value.length !== 0) {
+      onEmailInputChange(value);
       setData({
         ...data,
         email: value,
@@ -37,6 +92,11 @@ export function SignupBody() {
         email: value,
         checkTextInputChange: false,
       });
+    }
+  };
+  const fullNameTextChange = (value) => {
+    if (value.length > 5) {
+      onFullNameInputChange(value);
     }
   };
   const handelPasswordChange = (value) => {
@@ -52,6 +112,7 @@ export function SignupBody() {
     });
   };
   const handelConfirmPasswordChange = (value) => {
+    onConfirmPasswordInputChange(value);
     setData({
       ...data,
       password: value,
@@ -65,94 +126,101 @@ export function SignupBody() {
   };
   return (
     <View style={styles.inputsContainer}>
-      <Text
-        style={{
-          fontSize: 20,
-          color: "dodgerblue",
-          fontWeight: "bold",
-          marginBottom: 25,
-          padding: 10,
-          alignSelf: "center",
-        }}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        Create account
-      </Text>
-      <TouchableWithoutFeedback style={styles.touchable}>
-        <View style={{ flexDirection: "row" }}>
-          <Ionicons name="person" size={20} color="dodgerblue" />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Email"
-            onChangeText={(value) => textInputChange(value)}
-          />
-        </View>
-        <View>
-          {data.checkTextInputChange ? (
-            <Entypo name="check" size={20} color="green" />
-          ) : null}
-        </View>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback style={styles.touchable}>
-        <View style={{ flexDirection: "row" }}>
-          <Ionicons name="person" size={20} color="dodgerblue" />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Full name"
-            onChangeText={(value) => textInputChange(value)}
-          />
-        </View>
-        <View>
-          {data.checkTextInputChange ? (
-            <Entypo name="check" size={20} color="green" />
-          ) : null}
-        </View>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback style={styles.touchable}>
-        <View style={{ flexDirection: "row" }}>
-          <MaterialIcons name="lock" size={20} color="dodgerblue" />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Password"
-            secureTextEntry={data.securePasswordEntry ? true : false}
-            autoCapitalize="none"
-            onChangeText={(value) => handelPasswordChange(value)}
-          />
-        </View>
-        <TouchableOpacity onPress={updateSecurePasswordEntry}>
-          {data.securePasswordEntry ? (
-            <MaterialCommunityIcons
-              name="eye-off-outline"
-              size={20}
-              color="grey"
+        <Text
+          style={{
+            fontSize: 20,
+            color: "dodgerblue",
+            fontWeight: "bold",
+            marginBottom: 25,
+            padding: 10,
+            alignSelf: "center",
+          }}
+        >
+          Create account
+        </Text>
+        <TouchableWithoutFeedback style={styles.touchable}>
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons name="person" size={20} color="dodgerblue" />
+            <TextInput
+              style={styles.inputs}
+              placeholder="Email"
+              onChangeText={(value) => textInputChange(value)}
+              //onChangeText={(val) => validateEmail(val)}
             />
-          ) : (
-            <MaterialCommunityIcons name="eye" size={20} color="grey" />
-          )}
-        </TouchableOpacity>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback style={styles.touchable}>
-        <View style={{ flexDirection: "row" }}>
-          <MaterialIcons name="lock" size={20} color="dodgerblue" />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Confirm password"
-            secureTextEntry={data.secureConfirmPasswordEntry ? true : false}
-            autoCapitalize="none"
-            onChangeText={(value) => handelConfirmPasswordChange(value)}
-          />
-        </View>
-        <TouchableOpacity onPress={updateSecureConfirmPasswordEntry}>
-          {data.secureConfirmPasswordEntry ? (
-            <MaterialCommunityIcons
-              name="eye-off-outline"
-              size={20}
-              color="grey"
+          </View>
+          <View>
+            {data.checkTextInputChange ? (
+              <Entypo name="check" size={20} color="green" />
+            ) : null}
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback style={styles.touchable}>
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons name="person" size={20} color="dodgerblue" />
+            <TextInput
+              style={styles.inputs}
+              placeholder="Full name"
+              // onChangeText={(value) => textInputChange(value)}
+              onChangeText={(value) => fullNameTextChange(value)}
             />
-          ) : (
-            <MaterialCommunityIcons name="eye" size={20} color="grey" />
-          )}
-        </TouchableOpacity>
-      </TouchableWithoutFeedback>
+          </View>
+          <View>
+            {data.checkTextInputChange ? (
+              <Entypo name="check" size={20} color="green" />
+            ) : null}
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback style={styles.touchable}>
+          <View style={{ flexDirection: "row" }}>
+            <MaterialIcons name="lock" size={20} color="dodgerblue" />
+            <TextInput
+              style={styles.inputs}
+              placeholder="Password"
+              secureTextEntry={data.securePasswordEntry ? true : false}
+              autoCapitalize="none"
+              //onChangeText={(value) => handelPasswordChange(value)}
+              onChangeText={(val) => validatePassword(val)}
+            />
+          </View>
+          <TouchableOpacity onPress={updateSecurePasswordEntry}>
+            {data.securePasswordEntry ? (
+              <MaterialCommunityIcons
+                name="eye-off-outline"
+                size={20}
+                color="grey"
+              />
+            ) : (
+              <MaterialCommunityIcons name="eye" size={20} color="grey" />
+            )}
+          </TouchableOpacity>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback style={styles.touchable}>
+          <View style={{ flexDirection: "row" }}>
+            <MaterialIcons name="lock" size={20} color="dodgerblue" />
+            <TextInput
+              style={styles.inputs}
+              placeholder="Confirm password"
+              secureTextEntry={data.secureConfirmPasswordEntry ? true : false}
+              autoCapitalize="none"
+              onChangeText={(value) => handelConfirmPasswordChange(value)}
+            />
+          </View>
+          <TouchableOpacity onPress={updateSecureConfirmPasswordEntry}>
+            {data.secureConfirmPasswordEntry ? (
+              <MaterialCommunityIcons
+                name="eye-off-outline"
+                size={20}
+                color="grey"
+              />
+            ) : (
+              <MaterialCommunityIcons name="eye" size={20} color="grey" />
+            )}
+          </TouchableOpacity>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </View>
   );
 }
