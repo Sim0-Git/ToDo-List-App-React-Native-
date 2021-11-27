@@ -23,31 +23,29 @@ import {
 
 initializeApp(firebaseConfig); //initialize firebase
 
-//export const app = initializeApp(firebaseConfig); //initialize firebase
-
 const Stack = createStackNavigator();
 
 export default function App() {
   const [auth, setAuth] = useState();
+  const [user, setUser] = useState();
   const FBAuth = getAuth();
 
-  const signupHandler = (email, password) => {
-    const [user, setUser] = useState();
-    useEffect(() => {
-      //function that handle the user object
-      onAuthStateChanged(FBAuth, (user) => {
-        if (user) {
-          setAuth(true);
-          setUser(user);
-        } else {
-          setAuth(false);
-          setUser(null);
-        }
-      });
+  useEffect(() => {
+    //function that handle the user object
+    onAuthStateChanged(FBAuth, (user) => {
+      if (user) {
+        setAuth(true);
+        setUser(user);
+      } else {
+        setAuth(false);
+        setUser(null);
+      }
     });
+  });
+  const SignupHandler = (email, password) => {
     createUserWithEmailAndPassword(FBAuth, email, password)
       .then((userCredentials) => {
-        console.log(userCredentials);
+        console.log("User credential: ", userCredentials);
         setUser(userCredentials);
         setAuth(true);
       })
@@ -87,16 +85,6 @@ export default function App() {
               headerShown: false,
             }}
           />
-          {/* <Stack.Screen
-            name="Signup"
-            component={Signup}
-            options={{
-              headerLeft: null,
-              headerStyle: { backgroundColor: "dodgerblue" },
-              headerTintColor: "white",
-              headerShown: false,
-            }}
-          /> */}
           <Stack.Screen
             name="Signup"
             options={{
@@ -107,7 +95,7 @@ export default function App() {
             }}
           >
             {(props) => (
-              <Signup {...props} handle={signupHandler} auth={auth} />
+              <Signup {...props} handler={SignupHandler} auth={auth} />
             )}
           </Stack.Screen>
           <Stack.Screen

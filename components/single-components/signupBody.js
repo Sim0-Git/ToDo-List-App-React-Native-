@@ -5,16 +5,17 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import {
   Ionicons,
   MaterialIcons,
   MaterialCommunityIcons,
   Entypo,
+  Feather,
 } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { auth } from "../../App";
-import KeyboardAvoidingView from "react-native/Libraries/Components/Keyboard/KeyboardAvoidingView";
+//import { auth } from "../../App";
 
 export function SignupBody({
   onValidForm,
@@ -29,14 +30,16 @@ export function SignupBody({
   const [validForm, setValidForm] = useState(false);
 
   const validateEmail = (emailVal) => {
+    //Check if the email entered has the @ sign
     if (emailVal.indexOf("@") > 0) {
+      onEmailInputChange(emailVal);
       setValidEmail(true);
     } else {
       setValidEmail(false);
     }
   };
   const validatePassword = (passwordVal) => {
-    if (passwordVal.length > 8) {
+    if (passwordVal.length > 6) {
       onPasswordInputChange(passwordVal);
       setValidPassword(true);
     } else {
@@ -147,8 +150,8 @@ export function SignupBody({
             <TextInput
               style={styles.inputs}
               placeholder="Email"
-              onChangeText={(value) => textInputChange(value)}
-              //onChangeText={(val) => validateEmail(val)}
+              //onChangeText={(value) => textInputChange(value)}
+              onChangeText={(value) => validateEmail(value)}
             />
           </View>
           <View>
@@ -159,12 +162,13 @@ export function SignupBody({
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback style={styles.touchable}>
           <View style={{ flexDirection: "row" }}>
-            <Ionicons name="person" size={20} color="dodgerblue" />
+            <Feather name="type" size={19} color="dodgerblue" />
             <TextInput
               style={styles.inputs}
               placeholder="Full name"
               // onChangeText={(value) => textInputChange(value)}
-              onChangeText={(value) => fullNameTextChange(value)}
+              //onChangeText={(value) => fullNameTextChange(value)}
+              onChangeText={(value) => validatePassword(value)}
             />
           </View>
           <View>

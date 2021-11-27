@@ -7,8 +7,9 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   TextInput,
-  CheckBox,
 } from "react-native";
+import CheckBox from "@react-native-community/checkbox";
+//import CheckBox from "expo-checkbox";
 
 export default function Check() {
   const [isSelected, setSelection] = useState(false);

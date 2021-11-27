@@ -26,11 +26,6 @@ export default function itemForm({ addItem }) {
     }
     return invalid;
   };
-  // const checkMinInput = (value) => {
-  //   if (value.length >= 3) {
-  //     //setValidInput(true);
-  //   }
-  // };
 
   return (
     <View style={styles.container}>

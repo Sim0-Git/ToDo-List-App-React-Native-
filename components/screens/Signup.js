@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
 } from "react-native";
 import {
   Octicons,
@@ -17,13 +17,24 @@ import {
 import * as Animatable from "react-native-animatable";
 import { SignupBody } from "../single-components/signupBody";
 
-export function Signup({ props, navigation }) {
+export function Signup(props) {
+  const navigation = useNavigation();
+
   const [userFullName, setUserFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [validForm, setValidForm] = useState(false);
 
+  const submitHandler = () => {
+    console.log("Submitting");
+    props.handler(email, password);
+  };
+  useEffect(() => {
+    if (props.auth === true) {
+      navigation.reset({ index: 0, routes: [{ name: "Home" }] });
+    }
+  }, [props.auth]);
   return (
     <View style={styles.container}>
       <Animatable.View style={styles.logoContainer} animation="bounceIn">
@@ -82,12 +93,14 @@ export function Signup({ props, navigation }) {
             //   navigation.navigate("Home");
             // }}
             onPress={() => {
+              console.log("Valid form: " + validForm);
               console.log("User email(Signup): " + email);
               console.log("User full name(Signup): " + userFullName);
               console.log("User password(Signup): " + password);
               console.log(
                 "User confirmed password(Signup): " + confirmPassword
               );
+              submitHandler();
             }}
           >
             <Text style={styles.signupText}>Signup</Text>
@@ -129,7 +142,7 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   touchableSignupDisabled: {
-    backgroundColor: "lightgrey",
+    backgroundColor: "#F0F0F0",
     borderRadius: 15,
     height: 45,
     justifyContent: "center",

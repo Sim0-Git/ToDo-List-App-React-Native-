@@ -45,7 +45,7 @@ export function Signin({ navigation }) {
           }}
           onPasswordInputChange={(data) => {
             setPassword(data);
-          }}
+          }} 
         />
         <View style={styles.signin}>
           <TouchableOpacity

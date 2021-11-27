@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  KeyboardAvoidingView,
 } from "react-native";
 import {
   Ionicons,
@@ -15,7 +16,6 @@ import {
 } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as Animatable from "react-native-animatable";
-import KeyboardAvoidingView from "react-native/Libraries/Components/Keyboard/KeyboardAvoidingView";
 //import { auth } from "../../App";
 
 export function LoginBody({ onEmailInputChange, onPasswordInputChange }) {
