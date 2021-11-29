@@ -11,6 +11,7 @@ import { SplashScreen } from "./components/screens/Splash";
 import { HomeScreen } from "./components/screens/HomeScreen";
 import { Signup } from "./components/screens/Signup";
 import { Signin } from "./components/screens/Signin";
+import { Signout } from "./components/single-components/Signout";
 
 //Firebase
 import { firebaseConfig } from "./config";
@@ -20,6 +21,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 
 initializeApp(firebaseConfig); //initialize firebase
@@ -68,6 +70,15 @@ export default function App() {
         setSigninError(error.code);
       });
   };
+
+  const SignoutHandler = () => {
+    signOut(FBAuth)
+      .then(() => {
+        setAuth(false);
+        setUser(null);
+      })
+      .catch((error) => console.log(error.code));
+  };
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
@@ -82,6 +93,9 @@ export default function App() {
               headerTintColor: "white",
               headerTitleAlign: "center",
               headerLeft: null,
+              headerRight: (props) => (
+                <Signout {...props} handler={SignoutHandler} user={user} />
+              ),
             }}
           />
           <Stack.Screen

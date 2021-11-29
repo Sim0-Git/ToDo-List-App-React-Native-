@@ -16,8 +16,11 @@ import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import ItemForm from "../single-components/itemForm";
 import Check from "../single-components/CheckBox";
 import UpdateScreen from "../../components/screens/Update";
+import { Signout } from "../single-components/Signout";
+import { useNavigation } from "@react-navigation/native";
 
-export function HomeScreen({ route, navigation }) {
+export function HomeScreen({ route }, props) {
+  const navigation = useNavigation();
   const { key } = route.params; //Try to get these params from the update screen
   const { name } = route.params; //Try to get these params from the update screen
   console.log("Item name: " + name); //Just check the received data

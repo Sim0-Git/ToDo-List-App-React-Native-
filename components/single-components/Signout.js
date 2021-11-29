@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,11 +9,21 @@ import {
   FlatList,
   TextInput,
 } from "react-native";
+import { bool } from "yup";
 
-export function Signout() {
+export function Signout(props) {
   return (
-    <TouchableOpacity>
-      <Text>Sign out</Text>
+    <TouchableOpacity style={styles.signoutBtn} onPress={() => props.handler()}>
+      <Text style={styles.signoutTxt}>Sign out</Text>
     </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  signoutBtn: { padding: 10 },
+  signoutTxt: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+});
