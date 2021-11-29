@@ -16,14 +16,15 @@ import {
 } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { SignupBody } from "../single-components/signupBody";
+import { Feedback } from "../single-components/Feedback";
 
 export function Signup(props) {
   const navigation = useNavigation();
 
-  const [userFullName, setUserFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [userFullName, setUserFullName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
   const [validForm, setValidForm] = useState(false);
 
   const submitHandler = () => {
@@ -105,6 +106,7 @@ export function Signup(props) {
           >
             <Text style={styles.signupText}>Signup</Text>
           </TouchableOpacity>
+          <Feedback message={props.error} />
         </View>
       </Animatable.View>
     </View>

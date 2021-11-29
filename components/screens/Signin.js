@@ -1,25 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Octicons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { LoginBody } from "../single-components/loginBody";
 import * as AppColors from "../colorsApp";
+import { Feedback } from "../single-components/Feedback";
 
-export function Signin({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export function Signin(props) {
+  const navigation = useNavigation();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
-  // const onSignInPress = () => {
-  //   firestore
-  //     .collection("myUsers")
-  //     .set({
-  //       email: "blah@ab.c",
-  //       password: "123",
-  //     })
-  //     .then((response) => {
-  //       // navigate home
-  //     });
-  // };
+  useEffect(() => {
+    if (props.auth === true) {
+      navigation.reset({ index: 0, routes: [{ name: "Home" }] });
+    }
+  }, [props.auth]);
 
   return (
     <View style={styles.container}>
@@ -42,10 +39,11 @@ export function Signin({ navigation }) {
         <LoginBody
           onEmailInputChange={(data) => {
             setEmail(data);
+            console.log(data);
           }}
           onPasswordInputChange={(data) => {
             setPassword(data);
-          }} 
+          }}
         />
         <View style={styles.signin}>
           <TouchableOpacity
@@ -54,6 +52,7 @@ export function Signin({ navigation }) {
               // navigation.navigate("Home");
               console.log("User email(login): " + email);
               console.log("User password(login): " + password);
+              props.handler(email, password);
             }}
           >
             <Text style={styles.signinText}>Login</Text>
@@ -69,6 +68,7 @@ export function Signin({ navigation }) {
               Register
             </Text>
           </Text>
+          <Feedback message={props.error} />
         </View>
       </Animatable.View>
     </View>

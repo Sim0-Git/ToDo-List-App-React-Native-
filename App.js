@@ -19,6 +19,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 
 initializeApp(firebaseConfig); //initialize firebase
@@ -29,6 +30,8 @@ export default function App() {
   const [auth, setAuth] = useState();
   const [user, setUser] = useState();
   const FBAuth = getAuth();
+  const [signupError, setSignupError] = useState();
+  const [signinError, setSigninError] = useState();
 
   useEffect(() => {
     //function that handle the user object
@@ -43,6 +46,7 @@ export default function App() {
     });
   });
   const SignupHandler = (email, password) => {
+    setSignupError(null);
     createUserWithEmailAndPassword(FBAuth, email, password)
       .then((userCredentials) => {
         console.log("User credential: ", userCredentials);
@@ -50,7 +54,18 @@ export default function App() {
         setAuth(true);
       })
       .catch((error) => {
-        console.log(error);
+        setSignupError(error.code);
+      });
+  };
+  const SigninHandler = (email, password) => {
+    signInWithEmailAndPassword(FBAuth, email, password)
+      .then((userCredentials) => {
+        setUser(userCredentials);
+        setAuth(true);
+        console.log("Login successful");
+      })
+      .catch((error) => {
+        setSigninError(error.code);
       });
   };
   return (
@@ -76,7 +91,7 @@ export default function App() {
           />
           <Stack.Screen
             name="Login"
-            component={Signin}
+            //component={Signin}
             options={{
               headerLeft: null,
               headerStyle: { backgroundColor: "white" },
@@ -84,7 +99,16 @@ export default function App() {
               headerTitleStyle: { fontSize: 28 },
               headerShown: false,
             }}
-          />
+          >
+            {(props) => (
+              <Signin
+                {...props}
+                handler={SigninHandler}
+                auth={auth}
+                error={signinError}
+              />
+            )}
+          </Stack.Screen>
           <Stack.Screen
             name="Signup"
             options={{
@@ -95,7 +119,12 @@ export default function App() {
             }}
           >
             {(props) => (
-              <Signup {...props} handler={SignupHandler} auth={auth} />
+              <Signup
+                {...props}
+                handler={SignupHandler}
+                auth={auth}
+                error={signupError}
+              />
             )}
           </Stack.Screen>
           <Stack.Screen

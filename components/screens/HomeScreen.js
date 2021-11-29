@@ -134,7 +134,7 @@ export function HomeScreen({ route, navigation }) {
               update={updateItem}
             >
               <Text style={styles.text}>{item.name}</Text>
-              <Check />
+              {/* <Check /> */}
             </TouchableOpacity>
           )
         )}

@@ -16,7 +16,6 @@ import {
 } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import * as Animatable from "react-native-animatable";
-//import { auth } from "../../App";
 
 export function LoginBody({ onEmailInputChange, onPasswordInputChange }) {
   const [data, setData] = useState({
@@ -26,30 +25,30 @@ export function LoginBody({ onEmailInputChange, onPasswordInputChange }) {
     secureTextEntry: true,
   });
 
-  const textInputChange = (value) => {
-    onEmailInputChange(value);
-    if (value.length !== 0) {
-      setData({
-        ...data,
-        email: value,
-        checkTextInputChange: true,
-      });
-    } else {
-      setData({
-        ...data,
-        email: value,
-        checkTextInputChange: false,
-      });
-    }
-  };
+  // const textInputChange = (value) => {
+  //   onEmailInputChange(value);
+  //   if (value.length !== 0) {
+  //     setData({
+  //       ...data,
+  //       email: value,
+  //       checkTextInputChange: true,
+  //     });
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       email: value,
+  //       checkTextInputChange: false,
+  //     });
+  //   }
+  // };
 
-  const handelPasswordChange = (value) => {
-    onPasswordInputChange(value);
-    setData({
-      ...data,
-      password: value,
-    });
-  };
+  // const handelPasswordChange = (value) => {
+  //   onPasswordInputChange(value);
+  //   setData({
+  //     ...data,
+  //     password: value,
+  //   });
+  // };
   const updateSecureTextEntry = () => {
     setData({
       ...data,
@@ -80,8 +79,9 @@ export function LoginBody({ onEmailInputChange, onPasswordInputChange }) {
             <TextInput
               style={styles.inputs}
               placeholder="Enter your email"
-              value={data.email}
-              onChangeText={(value) => textInputChange(value)}
+              //value={data.email}
+              // onChangeText={(value) => textInputChange(value)}
+              onChangeText={(val) => onEmailInputChange(val)}
             />
           </View>
           <View>
@@ -98,8 +98,9 @@ export function LoginBody({ onEmailInputChange, onPasswordInputChange }) {
               placeholder="Enter your password"
               secureTextEntry={data.secureTextEntry ? true : false}
               autoCapitalize="none"
-              value={data.password}
-              onChangeText={(value) => handelPasswordChange(value)}
+              //value={data.password}
+              // onChangeText={(value) => handelPasswordChange(value)}
+              onChangeText={(val) => onPasswordInputChange(val)}
             />
           </View>
           <TouchableOpacity onPress={updateSecureTextEntry}>
