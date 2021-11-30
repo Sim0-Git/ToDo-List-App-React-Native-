@@ -39,7 +39,6 @@ export function Signin(props) {
         <LoginBody
           onEmailInputChange={(data) => {
             setEmail(data);
-            console.log(data);
           }}
           onPasswordInputChange={(data) => {
             setPassword(data);
@@ -49,7 +48,6 @@ export function Signin(props) {
           <TouchableOpacity
             style={styles.touchableSignin}
             onPress={() => {
-              // navigation.navigate("Home");
               console.log("User email(login): " + email);
               console.log("User password(login): " + password);
               props.handler(email, password);

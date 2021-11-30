@@ -19,13 +19,13 @@ import UpdateScreen from "../../components/screens/Update";
 import { Signout } from "../single-components/Signout";
 import { useNavigation } from "@react-navigation/native";
 
-export function HomeScreen({ route }, props) {
-  const navigation = useNavigation();
-  const { key } = route.params; //Try to get these params from the update screen
-  const { name } = route.params; //Try to get these params from the update screen
-  console.log("Item name: " + name); //Just check the received data
-  console.log("Item key: " + key);
+export function HomeScreen(props) {
+  // const { key } = route.params; //Try to get these params from the update screen
+  // const { name } = route.params; //Try to get these params from the update screen
+  // console.log("Item name: " + name); //Just check the received data
+  // console.log("Item key: " + key);
 
+  const navigation = useNavigation();
   const [modalOpen, setAddModalOpen] = useState(false);
   const [itemArray, setItemArray] = useState([]);
 
@@ -42,6 +42,12 @@ export function HomeScreen({ route }, props) {
     }
     storeData();
   }, [itemArray]);
+
+  useEffect(() => {
+    if (!props.auth) {
+      navigation.reset({ index: 0, routes: [{ name: "Login" }] });
+    }
+  }, [props.auth]);
 
   //Method that add an item into the array
   const addItem = (item) => {

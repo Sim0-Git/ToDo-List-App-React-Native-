@@ -86,7 +86,7 @@ export default function App() {
           <Stack.Screen
             initialParams={{ input: null }}
             name="Home"
-            component={HomeScreen}
+            //component={HomeScreen}
             options={{
               title: "My List",
               headerStyle: { backgroundColor: "dodgerblue" },
@@ -97,7 +97,25 @@ export default function App() {
                 <Signout {...props} handler={SignoutHandler} user={user} />
               ),
             }}
-          />
+          >
+            {(props) => <HomeScreen {...props} auth={auth} />}
+          </Stack.Screen>
+          {/* <Stack.Screen
+            initialParams={{ input: null }}
+            name="Home"
+            options={{
+              headerTitle: "My List",
+              headerStyle: { backgroundColor: "dodgerblue" },
+              headerTintColor: "white",
+              headerTitleAlign: "center",
+              headerLeft: null,
+              headerRight: (props) => (
+                <Signout {...props} handler={SignoutHandler} user={user} />
+              ),
+            }}
+          >
+            {(props) => <HomeScreen {...props} auth={auth} />}
+          </Stack.Screen> */}
           <Stack.Screen
             name="Splash"
             component={SplashScreen}

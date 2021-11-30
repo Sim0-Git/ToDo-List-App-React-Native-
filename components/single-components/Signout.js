@@ -9,7 +9,6 @@ import {
   FlatList,
   TextInput,
 } from "react-native";
-import { bool } from "yup";
 
 export function Signout(props) {
   return (
