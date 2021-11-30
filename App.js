@@ -23,6 +23,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
 
 initializeApp(firebaseConfig); //initialize firebase
 
@@ -31,9 +32,11 @@ const Stack = createStackNavigator();
 export default function App() {
   const [auth, setAuth] = useState();
   const [user, setUser] = useState();
-  const FBAuth = getAuth();
   const [signupError, setSignupError] = useState();
   const [signinError, setSigninError] = useState();
+
+  const FBAuth = getAuth();
+  const firestore = getFirestore();
 
   useEffect(() => {
     //function that handle the user object
@@ -51,7 +54,11 @@ export default function App() {
     setSignupError(null);
     createUserWithEmailAndPassword(FBAuth, email, password)
       .then((userCredentials) => {
-        console.log("User credential: ", userCredentials);
+        console.log("User credential: ", userCredentials.user.uid);
+        createUser("Users", {
+          id: userCredentials.user.uid,
+          email: userCredentials.user.email,
+        });
         setUser(userCredentials);
         setAuth(true);
       })
@@ -78,6 +85,10 @@ export default function App() {
         setUser(null);
       })
       .catch((error) => console.log(error.code));
+  };
+
+  const createUser = async (collection, data) => {
+    await setDoc(doc(firestore, collection, data.id), data);
   };
   return (
     <NavigationContainer>
