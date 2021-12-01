@@ -26,9 +26,10 @@ export function HomeScreen(props) {
   // console.log("Item key: " + key);
 
   const navigation = useNavigation();
+  const [listData, setListData] = useState();
+
   const [modalOpen, setAddModalOpen] = useState(false);
   const [itemArray, setItemArray] = useState([]);
-
   const [appInit, setAppInit] = useState(true);
 
   useEffect(() => {
@@ -48,6 +49,19 @@ export function HomeScreen(props) {
       navigation.reset({ index: 0, routes: [{ name: "Login" }] });
     }
   }, [props.auth]);
+  useEffect(() => {
+    setListData(props.data);
+    console.log(listData);
+  }, [props.data]);
+
+  const data = { time: new Date().getTime(), email: Math.random() * 100 };
+  //const data = { name: "Simone", email: props.user.email };
+
+  const renderItem = ({ item }) => {
+    <View>
+      <Text>{item.time}</Text>
+    </View>;
+  };
 
   //Method that add an item into the array
   const addItem = (item) => {
@@ -59,7 +73,6 @@ export function HomeScreen(props) {
     setAddModalOpen(false);
   };
 
-  //Working on this
   const updateItem = (key) => {
     console.log(key);
     setItemArray((oldArray) => {
@@ -113,6 +126,17 @@ export function HomeScreen(props) {
 
   return (
     <View style={styles.container}>
+      <View>
+        <Text>{props.user.email}</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            props.add(data);
+          }}
+        >
+          <Text>Add something</Text>
+        </TouchableOpacity>
+      </View>
       <Modal visible={modalOpen} animationType="slide">
         <View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -131,6 +155,11 @@ export function HomeScreen(props) {
         </View>
       </Modal>
       <FlatList
+        data={listData}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.time}
+      />
+      {/* <FlatList
         data={itemArray}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
@@ -143,11 +172,11 @@ export function HomeScreen(props) {
               update={updateItem}
             >
               <Text style={styles.text}>{item.name}</Text>
-              {/* <Check /> */}
+              <Check />
             </TouchableOpacity>
           )
         )}
-      />
+      /> */}
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.deleteAllBtn}
@@ -158,12 +187,14 @@ export function HomeScreen(props) {
           </Text>
         </TouchableOpacity>
         {/* <UpdateScreen updateItem={updateItem} /> */}
-        <MaterialIcons
-          style={styles.addButton}
-          name="add"
-          size={50}
-          onPress={() => setAddModalOpen(true)}
-        />
+        <TouchableOpacity style={styles.addButton}>
+          <MaterialIcons
+            style={{ color: "white" }}
+            name="add"
+            size={50}
+            onPress={() => setAddModalOpen(true)}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -194,7 +225,6 @@ const styles = StyleSheet.create({
   addButton: {
     borderRadius: 30,
     backgroundColor: "dodgerblue",
-    color: "white",
     alignSelf: "flex-end",
     marginRight: 10,
     marginTop: 10,
@@ -209,7 +239,7 @@ const styles = StyleSheet.create({
     backgroundColor: "dodgerblue",
     borderRadius: 20,
     maxHeight: 50,
-    padding: 10,
+    padding: 12,
     elevation: 6,
   },
 });

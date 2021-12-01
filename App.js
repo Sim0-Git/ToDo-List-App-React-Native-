@@ -14,6 +14,7 @@ import { Signin } from "./components/screens/Signin";
 import { Signout } from "./components/single-components/Signout";
 
 //Firebase
+
 import { firebaseConfig } from "./config";
 import { initializeApp } from "@firebase/app";
 import {
@@ -23,9 +24,22 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { getFirestore, setDoc, doc } from "firebase/firestore";
+import {
+  getFirestore,
+  setDoc,
+  addDoc,
+  doc,
+  collection,
+  query,
+  where,
+  onSnapshot,
+  initializeFirestore,
+} from "firebase/firestore";
 
-initializeApp(firebaseConfig); //initialize firebase
+//initializeApp(firebaseConfig); //initialize firebase
+const FBapp = initializeApp(firebaseConfig);
+const FSdb = initializeFirestore(FBapp, { useFetchStreams: false });
+const FBauth = getAuth();
 
 const Stack = createStackNavigator();
 
@@ -34,32 +48,41 @@ export default function App() {
   const [user, setUser] = useState();
   const [signupError, setSignupError] = useState();
   const [signinError, setSigninError] = useState();
+  const [data, setData] = useState();
 
-  const FBAuth = getAuth();
-  const firestore = getFirestore();
+  //const FBAuth = getAuth();
+  //const firestore = getFirestore();
 
   useEffect(() => {
     //function that handle the user object
-    onAuthStateChanged(FBAuth, (user) => {
+    onAuthStateChanged(FBauth, (user) => {
       if (user) {
         setAuth(true);
         setUser(user);
+        console.log("authed");
+        if (!data) {
+          getData();
+        }
       } else {
         setAuth(false);
         setUser(null);
       }
     });
   });
+
+  // useEffect(() => {
+  //   if (!data && auth === true && user === true) {
+  //     getData();
+  //     console.log("call get data...");
+  //   }
+  // }, [data, auth, user]);
+
   const SignupHandler = (email, password) => {
     setSignupError(null);
-    createUserWithEmailAndPassword(FBAuth, email, password)
+    createUserWithEmailAndPassword(FBauth, email, password)
       .then((userCredentials) => {
         console.log("User credential: ", userCredentials.user.uid);
-        createUser("Users", {
-          id: userCredentials.user.uid,
-          email: userCredentials.user.email,
-        });
-        setUser(userCredentials);
+        setUser(userCredentials.user);
         setAuth(true);
       })
       .catch((error) => {
@@ -67,11 +90,11 @@ export default function App() {
       });
   };
   const SigninHandler = (email, password) => {
-    signInWithEmailAndPassword(FBAuth, email, password)
+    signInWithEmailAndPassword(FBauth, email, password)
       .then((userCredentials) => {
-        setUser(userCredentials);
+        setUser(userCredentials.user);
         setAuth(true);
-        console.log("Login successful");
+        console.log("User: ", userCredentials.user.uid);
       })
       .catch((error) => {
         setSigninError(error.code);
@@ -79,7 +102,7 @@ export default function App() {
   };
 
   const SignoutHandler = () => {
-    signOut(FBAuth)
+    signOut(FBauth)
       .then(() => {
         setAuth(false);
         setUser(null);
@@ -87,9 +110,31 @@ export default function App() {
       .catch((error) => console.log(error.code));
   };
 
-  const createUser = async (collection, data) => {
-    await setDoc(doc(firestore, collection, data.id), data);
+  const addData = async (data) => {
+    //const ref = await addDoc(collection(FSdb, FScollection), data);
+    const ref = await setDoc(
+      doc(FSdb, `Users/${user.uid}/documents/${new Date().getTime()}`),
+      data
+    );
   };
+
+  const getData = () => {
+    //console.log("...getting data", user);
+    const FSQuery = query(collection(FSdb, `Users/${user.uid}/documents`));
+    const unsubscribe = onSnapshot(FSQuery, (querySnapshot) => {
+      let FSdata = [];
+      querySnapshot.forEach((doc) => {
+        let item = {};
+        item = doc.data();
+        item.id = doc.id;
+        console.log(doc.id);
+        FSdata.push(item);
+      });
+      setData(FSdata);
+      console.log(FSdata);
+    });
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
@@ -109,24 +154,16 @@ export default function App() {
               ),
             }}
           >
-            {(props) => <HomeScreen {...props} auth={auth} />}
+            {(props) => (
+              <HomeScreen
+                {...props}
+                auth={auth}
+                add={addData}
+                data={data}
+                user={user}
+              />
+            )}
           </Stack.Screen>
-          {/* <Stack.Screen
-            initialParams={{ input: null }}
-            name="Home"
-            options={{
-              headerTitle: "My List",
-              headerStyle: { backgroundColor: "dodgerblue" },
-              headerTintColor: "white",
-              headerTitleAlign: "center",
-              headerLeft: null,
-              headerRight: (props) => (
-                <Signout {...props} handler={SignoutHandler} user={user} />
-              ),
-            }}
-          >
-            {(props) => <HomeScreen {...props} auth={auth} />}
-          </Stack.Screen> */}
           <Stack.Screen
             name="Splash"
             component={SplashScreen}
