@@ -3,8 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  TouchableHighlight,
   TouchableOpacity,
   Alert,
   FlatList,
@@ -13,11 +11,13 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Formik } from "formik";
+import { useNavigation } from "@react-navigation/native";
 StatusBar.setHidden(true);
 
-export default function itemForm({ addItem }) {
+export default function updateItemForm({ updateItem, itemName, itemKey }) {
   const [textInput, setTextInput] = useState();
   const [validInput, setValidInput] = useState(false);
+  const navigation = useNavigation();
 
   const onValidate = (values) => {
     //Check if the input from the user is empty
@@ -30,16 +30,21 @@ export default function itemForm({ addItem }) {
     return invalid;
   };
 
+  const backHome = () => {
+    navigation.reset({ index: 0, routes: [{ name: "Home" }] });
+  };
+
   return (
     <SafeAreaView style={styles.safeContainer}>
       <View style={styles.container}>
         <Formik
           validate={onValidate}
-          initialValues={{ name: "", key: "" }}
+          initialValues={{ name: itemName, key: itemKey }}
           onSubmit={(value, actions) => {
             actions.resetForm(); //Reset the form
-            addItem(value);
-            console.log(value);
+            updateItem(itemKey, value.name, item);
+            console.log("New object", value);
+            console.log("New item name: ", itemName);
           }}
         >
           {(props) => (
@@ -51,12 +56,14 @@ export default function itemForm({ addItem }) {
                 value={props.values.name}
               />
               <TouchableOpacity
-                //style={props.values.name ? styles.button : styles.buttonDisabled}
                 style={styles.button}
-                onPress={props.handleSubmit}
-                //disabled={props.values.name ? false : true}
+                // onPress={props.handleSubmit}
+                onPress={() => {
+                  backHome();
+                }}
+                onPressIn={props.handleSubmit}
               >
-                <Text style={styles.text}>Add</Text>
+                <Text style={styles.text}>Update</Text>
               </TouchableOpacity>
             </View>
           )}

@@ -5,7 +5,6 @@ import {
   Text,
   View,
   SafeAreaView,
-  TouchableHighlight,
   TouchableOpacity,
   Alert,
   Button,
@@ -14,6 +13,7 @@ import {
 } from "react-native";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import ItemForm from "../single-components/itemForm";
+import UpdateItemForm from "../single-components/updateItemForm";
 import Check from "../single-components/CheckBox";
 import UpdateScreen from "../../components/screens/Update";
 import { Signout } from "../single-components/Signout";
@@ -29,8 +29,13 @@ export function HomeScreen(props) {
   const [listData, setListData] = useState();
 
   const [modalOpen, setAddModalOpen] = useState(false);
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [itemArray, setItemArray] = useState([]);
+  const [updatedArray, setUpdatedArray] = useState([]);
   const [appInit, setAppInit] = useState(true);
+
+  const [nameItemToUpdate, setNameItemToUpdate] = useState();
+  const [keyItemToUpdate, setKeyItemToUpdate] = useState();
 
   useEffect(() => {
     if (appInit) {
@@ -57,11 +62,11 @@ export function HomeScreen(props) {
   const data = { time: new Date().getTime(), email: Math.random() * 100 };
   //const data = { name: "Simone", email: props.user.email };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }) => (
     <View>
       <Text>{item.time}</Text>
-    </View>;
-  };
+    </View>
+  );
 
   //Method that add an item into the array
   const addItem = (item) => {
@@ -69,21 +74,29 @@ export function HomeScreen(props) {
     setItemArray((currentItem) => {
       return [item, ...currentItem];
     });
+    console.log("item added: ", item);
 
     setAddModalOpen(false);
   };
 
-  const updateItem = (key) => {
-    console.log(key);
-    setItemArray((oldArray) => {
-      return [
-        {
-          value: value,
-          key: key,
-        },
-        ...oldArray,
-      ];
-    });
+  //Trying to update items
+  const updateItem = (key, newName) => {
+    console.log("Key of item to be update", key);
+    console.log("Item name to be updated : " + newName);
+    setNameItemToUpdate(newName);
+    setKeyItemToUpdate(key);
+    //-----------------------------------
+    const index = itemArray.findIndex((el) => el.key === key);
+    itemArray[index] = {
+      key: key,
+      name: newName,
+    };
+    console.log("Object at index: ", itemArray[index]);
+    let newArray = itemArray;
+    setItemArray(newArray);
+    console.log("Array: ", itemArray);
+    setUpdatedArray(newArray);
+    //-----------------------------------
   };
 
   //Method that delete a single item from the list when the user long-presses the item
@@ -126,7 +139,7 @@ export function HomeScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View>
+      {/* <View>
         <Text>{props.user.email}</Text>
         <TouchableOpacity
           style={styles.button}
@@ -136,7 +149,8 @@ export function HomeScreen(props) {
         >
           <Text>Add something</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
+      {/* Add Modal */}
       <Modal visible={modalOpen} animationType="slide">
         <View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -145,38 +159,82 @@ export function HomeScreen(props) {
               name="arrow-back"
               size={28}
               color="black"
-              style={{ marginTop: 15, marginBottom: 15 }}
+              style={{ marginTop: 50, marginBottom: 15 }}
             />
-            <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 25 }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                marginLeft: 25,
+                marginTop: 30,
+              }}
+            >
               Add item
             </Text>
           </View>
           <ItemForm addItem={addItem} />
         </View>
       </Modal>
-      <FlatList
+      {/* Update modal */}
+      <Modal visible={updateModalOpen} animationType="slide">
+        <View>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Ionicons
+              onPress={() => setUpdateModalOpen(false)}
+              name="arrow-back"
+              size={28}
+              color="black"
+              style={{ marginTop: 50, marginBottom: 15 }}
+            />
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                marginLeft: 25,
+                marginTop: 30,
+              }}
+            >
+              Update item
+            </Text>
+          </View>
+          <UpdateItemForm
+            updateItem={updateItem}
+            itemName={nameItemToUpdate}
+            itemKey={keyItemToUpdate}
+          />
+        </View>
+      </Modal>
+      {/* <FlatList
         data={listData}
         renderItem={renderItem}
         keyExtractor={(item) => item.time}
-      />
-      {/* <FlatList
+      /> */}
+      <FlatList
         data={itemArray}
+        // data={updatedArray.length >= 0 ? updatedArray : itemArray}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
-          console.log(item),
+          console.log("Item rendered", item),
           (
             <TouchableOpacity
               style={styles.itemButton}
-              onPress={() => navigation.navigate("Update Item", item)} //Send the object selected to the update screen
+              //onPress={() => navigation.navigate("Update Item", item)} //Send the object selected to the update screen
+              onPress={() => {
+                setUpdateModalOpen(true);
+                updateItem(item.key, item.name);
+                //updateItem(item);
+                console.log("Item to update: ", item);
+              }}
               onLongPress={() => deleteItem(item.key, item.name)}
               update={updateItem}
+              //item={item}
             >
               <Text style={styles.text}>{item.name}</Text>
-              <Check />
+              {/* <Check /> */}
             </TouchableOpacity>
           )
         )}
-      /> */}
+      />
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.deleteAllBtn}
