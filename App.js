@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -70,13 +70,6 @@ export default function App() {
     });
   });
 
-  // useEffect(() => {
-  //   if (!data && auth === true && user === true) {
-  //     getData();
-  //     console.log("call get data...");
-  //   }
-  // }, [data, auth, user]);
-
   const SignupHandler = (email, password) => {
     setSignupError(null);
     createUserWithEmailAndPassword(FBauth, email, password)
@@ -89,6 +82,7 @@ export default function App() {
         setSignupError(error.code);
       });
   };
+
   const SigninHandler = (email, password) => {
     signInWithEmailAndPassword(FBauth, email, password)
       .then((userCredentials) => {
@@ -102,6 +96,11 @@ export default function App() {
   };
 
   const SignoutHandler = () => {
+    Alert.alert("Alert", "You have been sign out", [
+      {
+        text: "Ok",
+      },
+    ]);
     signOut(FBauth)
       .then(() => {
         setAuth(false);
@@ -111,7 +110,6 @@ export default function App() {
   };
 
   const addData = async (data) => {
-    //const ref = await addDoc(collection(FSdb, FScollection), data);
     const ref = await setDoc(
       doc(FSdb, `Users/${user.uid}/documents/${new Date().getTime()}`),
       data

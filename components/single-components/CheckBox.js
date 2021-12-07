@@ -1,26 +1,20 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TouchableHighlight,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
-import CheckBox from "@react-native-community/checkbox";
-//import CheckBox from "expo-checkbox";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
+//CheckBox component
 export default function Check() {
-  const [isSelected, setSelection] = useState(false);
-
+  const [checkboxState, setCheckboxState] = useState(false);
   return (
     <TouchableOpacity>
-      <CheckBox
-        style={styles.checkBox}
-        value={isSelected}
-        onValueChange={setSelection}
-        tintColors={{ true: "white", false: "red" }}
+      <BouncyCheckbox
+        size={25}
+        fillColor="orange"
+        unfillColor="white"
+        isChecked={checkboxState}
+        iconStyle={{ borderColor: "white" }}
+        disableBuiltInState
+        onPress={() => setCheckboxState(!checkboxState)}
       />
     </TouchableOpacity>
   );

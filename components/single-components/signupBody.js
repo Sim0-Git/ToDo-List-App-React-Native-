@@ -24,18 +24,29 @@ export function SignupBody({
   onPasswordInputChange,
   onConfirmPasswordInputChange,
 }) {
-  //----------Johannes---------------
+  //----------Class version---------------
   const [validEmail, setValidEmail] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
+  const [validConfirmPassword, setValidConfirmPassword] = useState(false);
   const [validForm, setValidForm] = useState(false);
 
   const validateEmail = (emailVal) => {
     //Check if the email entered has the @ sign
-    if (emailVal.indexOf("@") > 0) {
+    if (emailVal.indexOf("@") > 0 && emailVal.indexOf(".com") > 0) {
       onEmailInputChange(emailVal);
       setValidEmail(true);
+      setData({
+        ...data,
+        email: emailVal,
+        checkTextInputChange: true,
+      });
     } else {
       setValidEmail(false);
+      setData({
+        ...data,
+        email: emailVal,
+        checkTextInputChange: false,
+      });
     }
   };
   const validatePassword = (passwordVal) => {
@@ -46,6 +57,14 @@ export function SignupBody({
       setValidPassword(false);
     }
   };
+  // const validateConfirmPassword = (confirmPasswordVal) => {
+  //   if (confirmPasswordVal.length > 6) {
+  //     onConfirmPasswordInputChange(confirmPasswordVal);
+  //     setValidConfirmPassword(true);
+  //   } else {
+  //     setValidConfirmPassword(false);
+  //   }
+  // };
   useEffect(() => {
     if (validEmail && validPassword) {
       setValidForm(true);
@@ -144,6 +163,7 @@ export function SignupBody({
         >
           Create account
         </Text>
+        {/* Email */}
         <TouchableWithoutFeedback style={styles.touchable}>
           <View style={{ flexDirection: "row" }}>
             <Ionicons name="person" size={20} color="dodgerblue" />
@@ -160,15 +180,16 @@ export function SignupBody({
             ) : null}
           </View>
         </TouchableWithoutFeedback>
+        {/* Full name
         <TouchableWithoutFeedback style={styles.touchable}>
           <View style={{ flexDirection: "row" }}>
             <Feather name="type" size={19} color="dodgerblue" />
             <TextInput
               style={styles.inputs}
               placeholder="Full name"
-              // onChangeText={(value) => textInputChange(value)}
+              onChangeText={(value) => textInputChange(value)}
               //onChangeText={(value) => fullNameTextChange(value)}
-              onChangeText={(value) => validatePassword(value)}
+              //onChangeText={(value) => validatePassword(value)}
             />
           </View>
           <View>
@@ -176,7 +197,8 @@ export function SignupBody({
               <Entypo name="check" size={20} color="green" />
             ) : null}
           </View>
-        </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback> */}
+        {/* Password */}
         <TouchableWithoutFeedback style={styles.touchable}>
           <View style={{ flexDirection: "row" }}>
             <MaterialIcons name="lock" size={20} color="dodgerblue" />
@@ -201,7 +223,8 @@ export function SignupBody({
             )}
           </TouchableOpacity>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback style={styles.touchable}>
+        {/* Confirm password */}
+        {/* <TouchableWithoutFeedback style={styles.touchable}>
           <View style={{ flexDirection: "row" }}>
             <MaterialIcons name="lock" size={20} color="dodgerblue" />
             <TextInput
@@ -209,7 +232,7 @@ export function SignupBody({
               placeholder="Confirm password"
               secureTextEntry={data.secureConfirmPasswordEntry ? true : false}
               autoCapitalize="none"
-              onChangeText={(value) => handelConfirmPasswordChange(value)}
+              onChangeText={(value) => validateConfirmPassword(value)}
             />
           </View>
           <TouchableOpacity onPress={updateSecureConfirmPasswordEntry}>
@@ -223,7 +246,7 @@ export function SignupBody({
               <MaterialCommunityIcons name="eye" size={20} color="grey" />
             )}
           </TouchableOpacity>
-        </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback> */}
       </KeyboardAvoidingView>
     </View>
   );

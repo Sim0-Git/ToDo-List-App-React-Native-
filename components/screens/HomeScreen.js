@@ -230,7 +230,7 @@ export function HomeScreen(props) {
               //item={item}
             >
               <Text style={styles.text}>{item.name}</Text>
-              {/* <Check /> */}
+              <Check />
             </TouchableOpacity>
           )
         )}

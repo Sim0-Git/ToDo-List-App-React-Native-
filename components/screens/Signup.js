@@ -73,16 +73,6 @@ export function Signup(props) {
             setConfirmPassword(confirmPasswordData);
           }}
         />
-        {/* <View style={styles.signup}>
-          <TouchableOpacity
-            style={styles.touchableSignup}
-            onPress={() => {
-              navigation.navigate("Home");
-            }}
-          >
-            <Text style={styles.signupText}>Signup</Text>
-          </TouchableOpacity>
-        </View> */}
         <View style={styles.signup}>
           <TouchableOpacity
             style={
@@ -90,9 +80,6 @@ export function Signup(props) {
                 ? styles.touchableSignupEnabled
                 : styles.touchableSignupDisabled
             }
-            // onPress={() => {
-            //   navigation.navigate("Home");
-            // }}
             onPress={() => {
               console.log("Valid form: " + validForm);
               console.log("User email(Signup): " + email);
